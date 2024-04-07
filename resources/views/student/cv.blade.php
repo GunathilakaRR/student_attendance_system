@@ -1,238 +1,30 @@
-<x-app-layout>
+{{-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
 
-
-
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Side Navigation Bar</title>
-        <link rel="stylesheet" href="student_dashboard.css">
-        <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-        <style>
-            @import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
-
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  list-style: none;
-  text-decoration: none;
-  font-family: 'Josefin Sans', sans-serif;
-}
-
-body{
-   background-color: #f3f5f9;
-}
-
-.wrapper{
-  display: flex;
-  position: relative;
-}
-
-.wrapper .sidebar{
-  width: 200px;
-  height: 100%;
-  background: #594f8d;
-  padding: 30px 0px;
-  position: fixed;
-}
-
-.wrapper .sidebar h2{
-  color: #fff;
-  text-transform: uppercase;
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.wrapper .sidebar ul li{
-  padding: 15px;
-  border-bottom: 1px solid #bdb8d7;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  border-top: 1px solid rgba(255,255,255,0.05);
-}
-
-.wrapper .sidebar ul li a{
-  color: #bdb8d7;
-  display: block;
-}
-
-.wrapper .sidebar ul li a .fas{
-  width: 25px;
-}
-
-.wrapper .sidebar ul li:hover{
-  background-color: #594f8d;
-}
-
-.wrapper .sidebar ul li:hover a{
-  color: #fff;
-}
-
-.wrapper .sidebar .social_media{
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-}
-
-.wrapper .sidebar .social_media a{
-  display: block;
-  width: 40px;
-  background: #594f8d;
-  height: 40px;
-  line-height: 45px;
-  text-align: center;
-  margin: 0 5px;
-  color: #bdb8d7;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
-.wrapper .main_content{
-  width: 100%;
-  margin-left: 200px;
-}
-
-.wrapper .main_content .header{
-  padding: 20px;
-  background: #fff;
-  color: #717171;
-  border-bottom: 1px solid #e0e4e8;
-}
-
-.wrapper .main_content .info{
-  margin: 20px;
-  color: #717171;
-  line-height: 25px;
-}
-
-.wrapper .main_content .info div{
-  margin-bottom: 20px;
-}
-
-        </style>
-    </head>
-
-
-    <body>
-
-
-    <div class="wrapper">
-        <div class="sidebar">
-            <h2>{{ Auth::user()->name1 }}</h2>
-            <h2>{{ Auth::user()->registration_number }}</h2>
-            <ul>
-                <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
-                <li><a href="#"><i class="fas fa-user"></i>Profile</a></li>
-                <li><a href="#"><i class="fas fa-address-card"></i>About</a></li>
-                <li><a href="{{ route('student-cvbuilder') }}"><i class="fas fa-project-diagram"></i>CV Builder</a></li>
-                <li><a href="#"><i class="fas fa-blog"></i>Blogs</a></li>
-                <li><a href="#"><i class="fas fa-address-book"></i>Contact</a></li>
-                <li><a href="#"><i class="fas fa-map-pin"></i>Map</a></li>
-            </ul>
-            <div class="social_media">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-        <div class="main_content">
-            <div class="header">Lets build your CV </div>
-            <div class="container">
-                {{-- <form method="POST" action="{{ route('generate.cv') }}"> --}}
-                <form onsubmit="event.preventDefault(); generateCV();">
-                    @csrf
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputFirstName">First Name</label>
-                            <input type="text" name="firstName" class="form-control" id="inputFirstName" value="{{ Auth::user()->name1 }}">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputLastName">Last Name</label>
-                            <input type="text" name="lastName" class="form-control" id="inputLastName" value="{{ Auth::user()->name2 }}">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputTele">Telephone Number</label>
-                            <input type="integer" name="teleNumber" class="form-control" id="inputTele">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputCity">City</label>
-                            <input type="text" name="city" class="form-control" id="inputCity">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="form-group col-md-4">
-                        <label for="inputEmail4">Email</label>
-                        <input type="email" name="email" class="form-control" id="inputEmail4" value="{{ Auth::user()->email }}">
-                      </div>
-                      <div class="form-group col-md-4">
-                        <label for="inputLinkedin">Linkedin Account</label>
-                        <input type="text" name="linkedin" class="form-control" id="inputLinkedin" placeholder="Linkedin">
-                      </div>
-                      <div class="form-group col-md-4">
-                        <label for="inputGithub">Github Account</label>
-                        <input type="text" name="github" class="form-control" id="inputGithub" placeholder="Github">
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group col-md-12">
-                        <label for="exampleFormControlTextarea1">About You</label>
-                        <textarea class="form-control" name="aboutYou" id="exampleFormControlTextarea1" rows="3"></textarea>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group col-md-6">
-                        <label for="exampleFormControlTextarea1">Tech Skills</label>
-                        <textarea class="form-control" name="techSkills" id="exampleFormControlTextarea1" rows="3"></textarea>
-                      </div>
-                      <div class="form-group col-md-6">
-                        <label for="exampleFormControlTextarea1">Soft Skills</label>
-                        <textarea class="form-control" name="softSkills" id="exampleFormControlTextarea1" rows="3"></textarea>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="form-group col-md-6">
-                        <label for="exampleFormControlTextarea1">Educational Qualifications</label>
-                        <textarea class="form-control" name="qualification" id="exampleFormControlTextarea1" rows="3"></textarea>
-                      </div>
-                      <div class="form-group col-md-6">
-                        <label for="exampleFormControlTextarea1">Projects</label>
-                        <textarea class="form-control" name="projects" id="exampleFormControlTextarea1" rows="3"></textarea>
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Generate CV</button>
-
-
-                  </form>
-            </div>
-
-
-        </div>
+    <div class="container">
+        <h1>Curriculum Vitae</h1>
+    <h2>Personal Information</h2>
+    <p><strong>Name:</strong> {{ $data['firstName'] }} {{ $data['lastName'] }}</p>
+    <p><strong>Email:</strong> {{ $data['email'] }}</p>
+    <p><strong>About me:</strong>{{ $data['aboutYou'] }}</p>
     </div>
 
-    </body>
+</body>
+</html> --}}
 
 
 
-    <script>
-        // Function to generate and open CV in new tab
-        function generateCV() {
-            // Get form inputs
-            var firstName = document.getElementById('inputFirstName').value;
-            var lastName = document.getElementById('inputLastName').value;
-            // Get other form inputs similarly
 
-            // Generate CV HTML content
-            var cvContent = `
-            <!DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -469,13 +261,13 @@ body{
 </head>
 
 <body>
-    <section class="main-section" id="cv-template">
+    <section class="main-section">
         <div class="left-part">
             <div class="photo-container">
                 <img src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg" alt="">
             </div>
             <div class="contact-container">
-                <h2 class="title">${firstName}</h2>
+                <h2 class="title">{{ $data['firstName'] }}</h2>
                 <div class="contact-list">
                     <div class="icon-container">
                         <i class="bi bi-geo-alt-fill"></i>
@@ -669,34 +461,7 @@ body{
             </div>
         </div>
     </section>
-    <button onclick="downloadCV()">Download PDF</button>
+
 </body>
 
-
 </html>
-
-
-            `;
-
-            // Open CV in new tab
-            var cvWindow = window.open();
-            cvWindow.document.open();
-            cvWindow.document.write(cvContent);
-            cvWindow.document.close();
-
-
-
-        }
-
-        
-
-
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-
-
-
-    </html>
-
-</x-app-layout>

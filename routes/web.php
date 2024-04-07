@@ -3,17 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\HTTP\Controllers\HomeController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\CVController;
+use App\Http\Controllers\AdminController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,7 +24,10 @@ Route::middleware([
     })->name('dashboard');
 });
 
+Route::post('generate-cv', [CVController::class, 'cvGenerate'])->name('generate.cv');
 
 Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
 Route::get('student-cvbuilder', [StudentController::class, 'CvBilder'])->name('student-cvbuilder');
+
+Route::get('view-students', [AdminController::class, 'viewStudents'])->name('view-students');

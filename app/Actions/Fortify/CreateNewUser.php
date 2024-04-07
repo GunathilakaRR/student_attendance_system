@@ -3,6 +3,9 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Models\Admin;
+use App\Models\Lecturer;
+use App\Models\Student;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
@@ -21,21 +24,56 @@ class CreateNewUser implements CreatesNewUsers
     {
         Validator::make($input, [
             'role' => ['required', 'integer', 'in:0,1,2'],
-            'student_registration_number' => ($input['role'] == 0) ? ['required', 'string'] : '', // Validate student registration number if role is Student            'name1' => ['required', 'string', 'max:255'],
+            'student_registration_number' => ($input['role'] == 0) ? ['required', 'string'] : '', // Validate student registration number if role is Student
+            'name1' => ['required', 'string', 'max:255'],
             'name2' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        return User::create([
-            'name1' => $input['name1'],
-            'name2' => $input['name2'],
-            'role' => $input['role'],
-            'student_registration_number' => $input['student_registration_number'],
-            'email' => $input['email'],
-            'password' => Hash::make($input['password']),
-        ]);
+
+        $role = $input['role'];
+        $email = $input['email'];
+        $userData = [
+            'role' => $role,
+            'email' => $email,
+        ];
+
+        $user = User::create($userData);
+
+        if ($role == 0) {
+            Student::create([
+                'user_id' => $user->id,
+                'name1' => $input['name1'],
+                'name2' => $input['name2'],
+                'email' => $input['email'],
+                'password' => Hash::make($input['password']),
+                // Add other student details here
+            ]);
+        } elseif ($role == 1) {
+            Admin::create([
+                'user_id' => $user->id,
+                'name1' => $input['name1'],
+                'name2' => $input['name2'],
+                'email' => $input['email'],
+                'password' => Hash::make($input['password']),
+                // Add other admin details here
+            ]);
+        } elseif ($role == 2) {
+            Lecturer::create([
+                'user_id' => $user->id,
+                'name1' => $input['name1'],
+                'name2' => $input['name2'],
+                'email' => $input['email'],
+                'password' => Hash::make($input['password']),
+                // Add other lecturer details here
+            ]);
+        }
+
+        return $user;
+
+
     }
 
 
