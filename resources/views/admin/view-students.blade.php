@@ -1,3 +1,6 @@
+
+
+
 <x-app-layout>
 
 
@@ -16,6 +19,9 @@
         <title>Side Navigation Bar</title>
         <link rel="stylesheet" href="student_dashboard.css">
         <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/brands.min.css"></script> --}}
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
         <style>
             @import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
@@ -130,14 +136,17 @@ body{
 
     <div class="wrapper">
         <div class="sidebar">
-            
-            <h2>{{ Auth::user()->student->name1 }}</h2>
+
+            @if(Auth::check() && Auth::user()->admin)
+                <h2>{{ Auth::user()->admin->name1 }}</h2>
+            @endif
+
             <h2>{{ Auth::user()->registration_number }}</h2>
             <ul>
                 <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
                 <li><a href="#"><i class="fas fa-user"></i>Profile</a></li>
-                <li><a href="#"><i class="fas fa-address-card"></i>About</a></li>
-                <li><a href="{{ route('student-cvbuilder') }}"><i class="fas fa-project-diagram"></i>CV Builder</a></li>
+                <li><a href="{{ route('view-students') }}"><i class="fas fa-address-card"></i>View Students</a></li>
+                {{-- <li><a href="{{ route('student-cvbuilder') }}"><i class="fas fa-project-diagram"></i>CV Builder</a></li> --}}
                 <li><a href="#"><i class="fas fa-blog"></i>Blogs</a></li>
                 <li><a href="#"><i class="fas fa-address-book"></i>Contact</a></li>
                 <li><a href="#"><i class="fas fa-map-pin"></i>Map</a></li>
@@ -151,14 +160,49 @@ body{
         <div class="main_content">
             <div class="header">Welcome!! Have a nice day.</div>
             <div class="info">
-              <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A sed nobis ut exercitationem atque accusamus sit natus officiis totam blanditiis at eum nemo, nulla et quae eius culpa eveniet voluptatibus repellat illum tenetur, facilis porro. Quae fuga odio perferendis itaque alias sint, beatae non maiores magnam ad, veniam tenetur atque ea exercitationem earum eveniet totam ipsam magni tempora aliquid ullam possimus? Tempora nobis facere porro, praesentium magnam provident accusamus temporibus! Repellendus harum veritatis itaque molestias repudiandae ea corporis maiores non obcaecati libero, unde ipsum consequuntur aut consectetur culpa magni omnis vero odio suscipit vitae dolor quod dignissimos perferendis eos? Consequuntur!</div>
-              <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A sed nobis ut exercitationem atque accusamus sit natus officiis totam blanditiis at eum nemo, nulla et quae eius culpa eveniet voluptatibus repellat illum tenetur, facilis porro. Quae fuga odio perferendis itaque alias sint, beatae non maiores magnam ad, veniam tenetur atque ea exercitationem earum eveniet totam ipsam magni tempora aliquid ullam possimus? Tempora nobis facere porro, praesentium magnam provident accusamus temporibus! Repellendus harum veritatis itaque molestias repudiandae ea corporis maiores non obcaecati libero, unde ipsum consequuntur aut consectetur culpa magni omnis vero odio suscipit vitae dolor quod dignissimos perferendis eos? Consequuntur!</div>
-              <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A sed nobis ut exercitationem atque accusamus sit natus officiis totam blanditiis at eum nemo, nulla et quae eius culpa eveniet voluptatibus repellat illum tenetur, facilis porro. Quae fuga odio perferendis itaque alias sint, beatae non maiores magnam ad, veniam tenetur atque ea exercitationem earum eveniet totam ipsam magni tempora aliquid ullam possimus? Tempora nobis facere porro, praesentium magnam provident accusamus temporibus! Repellendus harum veritatis itaque molestias repudiandae ea corporis maiores non obcaecati libero, unde ipsum consequuntur aut consectetur culpa magni omnis vero odio suscipit vitae dolor quod dignissimos perferendis eos? Consequuntur!</div>
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Reg No</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">E mail</th>
+                        <th scope="col">Profile</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach ($students as $student)
+                        <tr>
+                            <td>{{ $student->registration_number }}</td>
+                            <td>{{ $student->name1 }}</td>
+                            <td>{{ $student->name2 }}</td>
+                            <td>{{ $student->email }}</td>
+                            <td>profile</td>
+                            <td>
+                              <a href="#"><i class="fas fa-edit btn btn-primary"></i></a>
+                              <a href="#"><i class="fas fa-trash-alt btn btn-danger"></i></a>
+                              <a href="#"><i class="fas fa-eye btn btn-success"></i></a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                  </table>
           </div>
         </div>
     </div>
 
+
+
+
+
     </body>
     </html>
 
+
+
 </x-app-layout>
+
+
+

@@ -24,13 +24,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        // 'name1',
-        // 'name2',
         'role',
-        // 'student_registration_number',
         'email',
         'password',
-        // 'photo_path',
     ];
 
     /**
@@ -62,4 +58,24 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+
+    
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
+
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
+    public function lecturer()
+    {
+        return $this->hasOne(Lecturer::class);
+    }
+
 }

@@ -131,7 +131,10 @@ body{
     <div class="wrapper">
         <div class="sidebar">
             
-            <h2>{{ Auth::user()->name1 }}</h2>
+            @if(Auth::check() && Auth::user()->admin)
+                <h2>{{ Auth::user()->admin->name1 }}</h2>
+            @endif
+
             <h2>{{ Auth::user()->registration_number }}</h2>
             <ul>
                 <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
@@ -158,8 +161,14 @@ body{
         </div>
     </div>
 
+
+
+
+
     </body>
     </html>
+
+
 
 </x-app-layout>
 

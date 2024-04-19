@@ -150,11 +150,12 @@ body{
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputFirstName">First Name</label>
-                            <input type="text" name="firstName" class="form-control" id="inputFirstName" value="{{ Auth::user()->name1 }}">
+                            <input type="text" name="firstName" class="form-control" id="inputFirstName" value="{{ Auth::user()->student->name1 }}"
+                            >
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputLastName">Last Name</label>
-                            <input type="text" name="lastName" class="form-control" id="inputLastName" value="{{ Auth::user()->name2 }}">
+                            <input type="text" name="lastName" class="form-control" id="inputLastName" value="{{ Auth::user()->student->name2 }}">
                         </div>
                     </div>
                     <div class="form-row">
@@ -688,7 +689,7 @@ body{
 
         }
 
-        
+
 
 
     </script>

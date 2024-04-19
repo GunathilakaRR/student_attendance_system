@@ -15,6 +15,13 @@ class Student extends Model
         'name2',
         'email',
         'password',
+        'registration_number',
         // Add other student details here
     ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

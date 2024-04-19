@@ -24,7 +24,7 @@ class CreateNewUser implements CreatesNewUsers
     {
         Validator::make($input, [
             'role' => ['required', 'integer', 'in:0,1,2'],
-            'student_registration_number' => ($input['role'] == 0) ? ['required', 'string'] : '', // Validate student registration number if role is Student
+            'student_registration_number' => ($input['role'] == 0) ? ['required', 'string'] : '',
             'name1' => ['required', 'string', 'max:255'],
             'name2' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -35,9 +35,11 @@ class CreateNewUser implements CreatesNewUsers
 
         $role = $input['role'];
         $email = $input['email'];
+        $password = $input['password'];
         $userData = [
             'role' => $role,
             'email' => $email,
+            'password' => Hash::make($input['password']),
         ];
 
         $user = User::create($userData);
@@ -49,6 +51,7 @@ class CreateNewUser implements CreatesNewUsers
                 'name2' => $input['name2'],
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
+                'registration_number' => $input['student_registration_number'],
                 // Add other student details here
             ]);
         } elseif ($role == 1) {
