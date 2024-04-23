@@ -31,3 +31,4 @@ Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard')
 Route::get('student-cvbuilder', [StudentController::class, 'CvBilder'])->name('student-cvbuilder');
 
 Route::get('view-students', [AdminController::class, 'viewStudents'])->name('view-students');
+Route::get('view-lecturers', [AdminController::class, 'viewlecturers'])->name('view-lecturers');

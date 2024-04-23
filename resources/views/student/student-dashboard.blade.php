@@ -8,7 +8,7 @@
     </x-slot> --}}
 
 
-
+{{--
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -130,7 +130,7 @@ body{
 
     <div class="wrapper">
         <div class="sidebar">
-            
+
             <h2>{{ Auth::user()->student->name1 }}</h2>
             <h2>{{ Auth::user()->registration_number }}</h2>
             <ul>
@@ -159,6 +159,33 @@ body{
     </div>
 
     </body>
-    </html>
+    </html> --}}
+
+    <style>
+        .container {
+            display: flex;
+        }
+
+        .home-section {
+            flex: 1;
+            padding: 20px; /* Adjust padding as needed */
+        }
+
+        /* Adjust the styles for the sidebar as needed */
+        aside {
+            /* Your existing sidebar styles */
+        }
+    </style>
+
+    <div class="container">
+        @include('student.student-sidebar') <!-- Include the sidebar from the lecturer folder -->
+
+        <div class="home-section">
+            <!-- Your home section content -->
+            <p>Content goes here</p>
+
+            
+        </div>
+    </div>
 
 </x-app-layout>
