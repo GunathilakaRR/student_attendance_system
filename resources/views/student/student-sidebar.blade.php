@@ -1,4 +1,9 @@
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 <style>
+
     /* Sidebar CSS */
     body{
         margin: 0;
@@ -59,37 +64,44 @@
         border-top-right-radius: 18px;
         box-shadow: 0 -20px 0 0 #fff;
     }
-
-    aside h3{
-        margin: 0;
-        padding: 0px 30px 50px;
+    h2 ,h3{
+        font-size: 19px;
     }
 
-    aside h2{
-        margin: 0;
-        padding: 40px 0px;
-    }
+
 </style>
+
 
 
 <aside>
     {{-- <p>lecturer </p> --}}
-    <div style="text-align: center;">
+    <div style="text-align: center;" >
+        <div style="display: flex; justify-content: center;">
+            <img src="https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg" class="mt-5" alt="profile_image" width="100px" style="border-radius: 50%; ">
+        </div>
         <h2>{{ Auth::user()->student->name1 }}</h2>
         <h3>{{ Auth::user()->student->registration_number }}</h3>
     </div>
 
-    <a href="#">
-        <i class="fa fa-user-o" aria-hidden="true"></i> DASHBOARD
-    </a>
-    <a href="#">
-        <i class="fa fa-laptop" aria-hidden="true"></i> ATTENDANCE
-    </a>
-    <a href="#">
-        <i class="fa fa-clone" aria-hidden="true"></i> MARKS
-    </a>
-    <a href="#">
-        <i class="fa fa-clone" aria-hidden="true"></i> CV BUILDER
-    </a>
+    <div class="links mt-5">
+        <a href="#">
+            <i class="fa fa-user-o" aria-hidden="true"></i> DASHBOARD
+        </a>
+        <a href="{{ route("student-attendance") }}">
+            <i class="fa fa-laptop" aria-hidden="true"></i> ATTENDANCE
+        </a>
+        <a href="#">
+            <i class="fa fa-clone" aria-hidden="true"></i> MARKS
+        </a>
+        <a href="#">
+            <i class="fa fa-clone" aria-hidden="true"></i> CV BUILDER
+        </a>
+        <a href="{{ route('studentProfile_update', (Auth::user()->student->id)) }}">
+            <i class="fa fa-clone" aria-hidden="true"></i> PROFILE
+        </a>
+
+
+    </div>
+
     <!-- Add other sidebar links as needed -->
 </aside>

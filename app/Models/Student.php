@@ -16,6 +16,10 @@ class Student extends Model
         'email',
         'password',
         'registration_number',
+        'surname',
+        'city',
+        'phone_number',
+        'image',
         // Add other student details here
     ];
 

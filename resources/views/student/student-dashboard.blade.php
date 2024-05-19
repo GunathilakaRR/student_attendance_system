@@ -163,6 +163,7 @@ body{
 
     <style>
         .container {
+            padding: 0;
             display: flex;
         }
 
@@ -177,14 +178,14 @@ body{
         }
     </style>
 
-    <div class="container">
+    <div class="container" style="margin:0px 0px; padding:0px 0px;">
         @include('student.student-sidebar') <!-- Include the sidebar from the lecturer folder -->
 
         <div class="home-section">
             <!-- Your home section content -->
             <p>Content goes here</p>
 
-            
+
         </div>
     </div>
 

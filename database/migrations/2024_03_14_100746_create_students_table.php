@@ -18,7 +18,11 @@ return new class extends Migration
             $table->string('name2');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('registration_number');
+            $table->string('registration_number')->unique();
+            $table->string('surname')->nullable();
+            $table->string('city')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

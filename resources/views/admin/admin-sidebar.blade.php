@@ -3,7 +3,7 @@
     body{
         margin: 0;
     }
-    aside {
+    aside { ;
         color: #fff;
         width: 250px;
         padding-left: 20px;

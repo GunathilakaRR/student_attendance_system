@@ -8,7 +8,7 @@
         width: 250px;
         padding-left: 20px;
         height: 100vh;
-        background-image: linear-gradient(30deg , #0048bd, #44a7fd);
+        background-color: green;
         border-top-right-radius: 80px;
     }
 
@@ -78,8 +78,8 @@
     <a href="#">
         <i class="fa fa-user-o" aria-hidden="true"></i> My Drive
     </a>
-    <a href="#">
-        <i class="fa fa-laptop" aria-hidden="true"></i> Computers
+    <a href="{{ route( "code-generate" ) }}">
+        <i class="fa fa-laptop" aria-hidden="true"></i> CODE GENERATE
     </a>
     <a href="#">
         <i class="fa fa-clone" aria-hidden="true"></i> Shared with Me
