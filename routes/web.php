@@ -48,4 +48,6 @@ Route::get('admin-viewStudent/{id}', [AdminController::class, 'adminViewStudent'
 Route::get('admin_viewLecturer/{id}', [AdminController::class, 'adminViewLecturer'])->name('admin-viewLecturer');
 Route::get('view-lectures', [AdminController::class, 'viewLectures'])->name('view-lectures');
 Route::get('selectYear', [AdminController::class, 'selectYear'])->name('selectYear');
+Route::get('add_newLecture', [AdminController::class, 'addNewLecture'])->name('add-newLecture');
+Route::post('add_lecture', [AdminController::class, 'AddLecture'])->name('add_lecture');
 

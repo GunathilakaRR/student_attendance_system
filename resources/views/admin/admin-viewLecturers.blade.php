@@ -122,6 +122,16 @@
                                         <div class="col-md-6"><label class="labels">Email</label><input type="email"
                                                 class="form-control" value="{{ $lecturers->email }}" placeholder="email"></div>
                                     </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6"><label class="labels">Country</label><input
+                                                type="text" class="form-control"
+                                                placeholder="country" name="city"
+                                                value="Sri Lanka" style="text-transform: capitalize;"></div>
+                                        <div class="col-md-6"><label class="labels">Contact Number</label><input
+                                                type="text" class="form-control"
+                                                placeholder="country" name="phone_number"
+                                                value="+94" style="text-transform: capitalize;"></div>
+                                    </div>
                                     {{-- <div class="row mt-3">
                                         <div class="col-md-12"><label class="labels">Mobile Number</label><input
                                                 type="text" class="form-control" placeholder="enter phone number"

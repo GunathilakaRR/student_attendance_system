@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\Lecturer;
+use App\Models\Lecture;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -40,9 +41,29 @@ class AdminController extends Controller
     }
 
     public function viewLectures(){
-        $students = Student::all();
-        return view('admin.admin-viewLectures',  ['students' => $students]);
+        $lectures = Lecture::all();
+        return view('admin.admin-viewLectures',  ['lectures' => $lectures]);
     }
+
+    public function addNewLecture(){
+        return view('admin.admin-addNewLecture');
+    }
+
+
+    public function AddLecture(Request $request){
+        // dd($request);
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'code' => 'required|string|max:50',
+        ]);
+
+        Lecture::create($validatedData);
+        return redirect()->back()->with('success','Lecture added successfully');
+    }
+
+
+
 
     public function selectYear(){
 
