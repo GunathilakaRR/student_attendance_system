@@ -59,7 +59,7 @@ class StudentController extends Controller
             'student_registration_number' => 'required|string|max:255',
             'phone_number' => 'nullable|string|max:20',
             'profile_pic'=> 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            // Include validation for other fields as necessary
+            
         ]);
 
         $student = Student::find($id);

@@ -77,10 +77,14 @@
     {{-- <p>lecturer </p> --}}
     <div style="text-align: center;" >
         <div style="display: flex; justify-content: center;">
-            <img src="https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg" class="mt-5" alt="profile_image" width="100px" style="border-radius: 50%; ">
+            @if (Auth::user()->student->image)
+            <img style="object-fit: cover; border-radius: 50%; width: 100px; height: 100px; margin-top: 3rem;" src="{{ asset('storage/' . Auth::user()->student->image ) }}" alt="Profile Picture">
+        @else
+            <img class="rounded-circle mt-5" width="100px" src="{{ asset('images/default_profile.jpg') }}" alt="Default Profile Picture" >
+        @endif
         </div>
-        <h2>{{ Auth::user()->student->name1 }}</h2>
-        <h3>{{ Auth::user()->student->registration_number }}</h3>
+        <h2 style="text-transform: uppercase; margin-top: 1rem;">{{ Auth::user()->student->name1 }}</h2>
+        <h3 style="text-transform: uppercase;">{{ Auth::user()->student->registration_number }}</h3>
     </div>
 
     <div class="links mt-5">

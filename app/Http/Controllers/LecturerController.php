@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Lecturer;
+use App\Models\User;
+
 
 class LecturerController extends Controller
 {
@@ -32,10 +35,59 @@ class LecturerController extends Controller
 
             return redirect()->back()->with('success', 'One-time code generated successfully.');
         }
-        
+
         // dd($request);
         // $lectureCode = $request->input('lec-code');
 
         // return view('lecturer.lecturer-code-generate');
     }
+
+
+
+    public function LecturerProfileUpdate($id){
+
+        $lecturers = Lecturer::find($id);
+        return view('lecturer.lecturer-update', compact('lecturers'));
+
+
+    }
+
+
+    public function UpdateProfile(Request $request, $id){
+
+        //dd($request);
+
+        $validatedData = $request->validate([
+            'name1' => 'required|string|max:255',
+            'name2' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'profile_pic'=> 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $lecturer = Lecturer::find($id);
+
+        if ($request->hasFile('profile_pic')) {
+            $file = $request->file('profile_pic');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('profile_pictures', $filename, 'public');
+            $validatedData['image'] = $path;
+        }
+
+        $lecturer->update($validatedData);
+
+        return redirect()->back()->with('success', 'Profile updated successfully.');
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
 }

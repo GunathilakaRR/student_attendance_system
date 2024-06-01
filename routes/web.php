@@ -37,6 +37,8 @@ Route::post('update-profile/{id}', [StudentController::class, 'UpdateProfile'])-
 
 Route::get('code-generate', [LecturerController::class, 'codeGenerate'])->name('code-generate');
 Route::post('otc-generate', [LecturerController::class, 'otcGenerate'])->name('otc-generate');
+Route::get('lecturerProfile_update/{id}', [LecturerController::class, 'LecturerProfileUpdate'])->name('lecturerProfile_update');
+Route::post('update-profile/{id}', [LecturerController::class, 'UpdateProfile'])->name('lupdate-profile');
 
 
 
@@ -44,5 +46,6 @@ Route::get('view-students', [AdminController::class, 'viewStudents'])->name('vie
 Route::get('view-lecturers', [AdminController::class, 'viewlecturers'])->name('view-lecturers');
 Route::get('admin-viewStudent/{id}', [AdminController::class, 'adminViewStudent'])->name('admin-viewStudent');
 Route::get('admin_viewLecturer/{id}', [AdminController::class, 'adminViewLecturer'])->name('admin-viewLecturer');
+Route::get('view-lectures', [AdminController::class, 'viewLectures'])->name('view-lectures');
 Route::get('selectYear', [AdminController::class, 'selectYear'])->name('selectYear');
 

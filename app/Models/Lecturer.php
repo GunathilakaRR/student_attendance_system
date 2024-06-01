@@ -15,6 +15,13 @@ class Lecturer extends Model
         'name2',
         'email',
         'password',
+        'registration_number',
+        'surname',
+        'city',
+        'phone_number',
+        'image',
         // Add other lecturer details here
     ];
+
+
 }

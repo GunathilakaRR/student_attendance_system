@@ -78,11 +78,11 @@
             </style>
 
             <div class="container1">
-                @include('student.student-sidebar')
+                @include('lecturer.lecturer-sidebar')
 
                 <div class="home-section">
 
-                    <a href="javascript:history.back()" class="btn" style="background-color: #594f8d;">
+                    <a href="javascript:history.back()" class="btn" style="background-color: green;">
                         <i class="fa-solid fa-arrow-left" style="color: #ffffff;"></i>
                     </a>
 
@@ -96,14 +96,14 @@
                                     {{-- <img class="rounded-circle mt-5" width="150px"
                                         src="{{ asset('images/default_profile.jpg') }}"> --}}
 
-                                    @if ($students->image)
-                                        <img style="object-fit: cover; border-radius: 50%; width: 150px; height: 150px;" src="{{ asset('storage/' . $students->image) }}" alt="Profile Picture">
+                                    @if ($lecturers->image)
+                                        <img style="object-fit: cover; border-radius: 50%; width: 150px; height: 150px;" src="{{ asset('storage/' . $lecturers->image) }}" alt="Profile Picture">
                                     @else
                                         <img class="rounded-circle mt-5" width="150px" src="{{ asset('images/default_profile.jpg') }}" alt="Default Profile Picture" >
                                     @endif
 
-                                    <span style="text-transform: uppercase; font-color: black" >{{ $students->name1 }}</span>
-                                    <span style="text-transform: uppercase; font-color: black" >{{ $students->registration_number }}</span>
+                                    <span style="text-transform: uppercase; font-color: black" >{{ $lecturers->name1 }}</span>
+                                    <span style="text-transform: uppercase; font-color: black" >{{ $lecturers->registration_number }}</span>
                                 </div>
                             </div>
 
@@ -120,30 +120,41 @@
                                     </div>
                                 @endif
 
-                                <form action="{{ route('update-profile', $students->id) }}" method="POST"
+                                <form action="{{ route('lupdate-profile', $lecturers->id) }}"  method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="p-3 py-5">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <h4 class="text-right" style="text-transform: capitalize;">{{ $students->name1 }}'s Profile</h4>
+                                            <h4 class="text-right" style="text-transform: capitalize;">{{ $lecturers->name1 }}'s Profile</h4>
                                         </div>
 
                                         <div class="row mt-2">
                                             <div class="col-md-6"><label class="labels">First Name</label><input
                                                     type="text" class="form-control" placeholder="first name"
-                                                    value="{{ $students->name1 }}" name="name1" style="text-transform: capitalize;"></div>
+                                                    value="{{ $lecturers->name1 }}" name="name1" style="text-transform: capitalize;"></div>
                                             <div class="col-md-6"><label class="labels">Last Name</label><input
-                                                    type="text" class="form-control" value="{{ $students->name2 }}"
+                                                    type="text" class="form-control" value="{{ $lecturers->name2 }}"
                                                     placeholder="last name" name="name2" style="text-transform: capitalize;"></div>
                                         </div>
                                         <div class="row mt-2">
                                             <div class="col-md-6"><label class="labels">Registration No.</label><input
                                                     type="text" class="form-control"
                                                     placeholder="registration number" name="student_registration_number"
-                                                    value="{{ $students->registration_number }}" style="text-transform: uppercase;"></div>
+                                                    value="{{ $lecturers->registration_number }}" style="text-transform: capitalize;"></div>
                                             <div class="col-md-6"><label class="labels">Email</label><input
-                                                    type="email" class="form-control" value="{{ $students->email }}"
+                                                    type="email" class="form-control" value="{{ $lecturers->email }}"
                                                     placeholder="email" name="email"></div>
+                                        </div>
+
+                                        <div class="row mt-2">
+                                            <div class="col-md-6"><label class="labels">Country</label><input
+                                                    type="text" class="form-control"
+                                                    placeholder="country" name="city"
+                                                    value="Sri Lanka" style="text-transform: capitalize;"></div>
+                                            <div class="col-md-6"><label class="labels">Contact Number</label><input
+                                                    type="text" class="form-control"
+                                                    placeholder="country" name="phone_number"
+                                                    value="+94" style="text-transform: capitalize;"></div>
                                         </div>
 
                                         <div class="row mt-2">
@@ -155,7 +166,7 @@
                                         </div>
 
                                         <div class="mt-5 text-center">
-                                            <button class="btn" style="background-color: #594f8d; color:white;"
+                                            <button class="btn" style="background-color: green; color:white;"
                                                 type="submit">Update Profile</button>
                                         </div>
 

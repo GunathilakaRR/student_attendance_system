@@ -38,6 +38,8 @@
 
                 <div class="home-section">
 
+                    <button class="btn" style="background-color: #e84424; color: #ffff">Add New Lecture</button>
+
                     {{-- <form method="GET" action="{{ route('selectYear') }}">
                         <div class="mb-3">
                             <label for="year" class="form-label">Select Year:</label>

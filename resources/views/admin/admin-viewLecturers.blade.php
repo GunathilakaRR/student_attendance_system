@@ -90,26 +90,35 @@
                     <div class="container rounded bg-white mb-5">
                         <div class="row">
                             <div class="col-md-3 border-right">
-                                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
-                                        class="rounded-circle mt-5" width="150px"
-                                        src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span
-                                        class="font-weight-bold">{{ $lecturers->name1 }}</span><span
-                                        class="text-black-50">{{ $lecturers->user_id }}</span><span> </span></div>
+                                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+
+                                    @if ($lecturers->image)
+                                        <img style="object-fit: cover; border-radius: 50%; width: 150px; height: 150px; "
+                                            src="{{ asset('storage/' . $lecturers->image) }}" alt="Profile Picture">
+                                    @else
+                                        <img style="object-fit: cover; border-radius: 50%; width: 150px; height: 150px; "
+                                            src="{{ asset('images/default_profile.jpg') }}"
+                                            alt="Default Profile Picture">
+                                    @endif
+
+                                        <span style="text-transform: uppercase;">{{ $lecturers->name1 }}</span>
+                                        <span style="text-transform: uppercase;">{{ $lecturers->user_id }}</span>
+                                    </div>
                             </div>
                             <div class="col-md-5 border-right">
                                 <div class="p-3 py-5">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h4 class="text-right">{{ $lecturers->name1 }}'s Profile</h4>
+                                        <h4 style="text-transform: capitalize;" class="text-right">{{ $lecturers->name1 }}'s Profile</h4>
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-md-6"><label class="labels">First Name</label><input type="text"
-                                                class="form-control" placeholder="first name" value="{{ $lecturers->name1 }}"></div>
+                                                class="form-control" placeholder="first name" value="{{ $lecturers->name1 }}" style="text-transform: capitalize;"></div>
                                         <div class="col-md-6"><label class="labels">Last Name</label><input type="text"
-                                                class="form-control" value="{{ $lecturers->name2 }}" placeholder="last name"></div>
+                                                class="form-control" value="{{ $lecturers->name2 }}" style="text-transform: capitalize;" placeholder="last name"></div>
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-md-6"><label class="labels">Registration No.</label><input type="text"
-                                                class="form-control" placeholder="registration number" value="{{ $lecturers->registration_number }}"></div>
+                                                class="form-control" placeholder="registration number" value="{{ $lecturers->user_id }}"></div>
                                         <div class="col-md-6"><label class="labels">Email</label><input type="email"
                                                 class="form-control" value="{{ $lecturers->email }}" placeholder="email"></div>
                                     </div>

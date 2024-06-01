@@ -88,7 +88,7 @@
     <a href="{{ route('view-lecturers') }}">
         <i class="fa fa-clone" aria-hidden="true"></i> VIEW LECTURERS
     </a>
-    <a href="#">
+    <a href="{{ route('view-lectures') }}">
         <i class="fa fa-clone" aria-hidden="true"></i> VIEW LECTURES
     </a>
     <a href="#">

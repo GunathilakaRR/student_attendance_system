@@ -65,24 +65,38 @@
         padding: 40px 0;
     }
 
-    aside h2{
-        margin: 0;
-        padding: 40px 50px;
+    h2 ,h3{
+        font-size: 19px;
     }
+
 </style>
 
 
 <aside>
+
+    <div style="text-align: center;" >
+        <div style="display: flex; justify-content: center;">
+            @if (Auth::user()->lecturer->image)
+                <img style="object-fit: cover; border-radius: 50%; width: 100px; height: 100px; margin-top: 3rem;" src="{{ asset('storage/' . Auth::user()->lecturer->image ) }}" alt="Profile Picture">
+            @else
+                <img style="object-fit: cover; border-radius: 50%; width: 100px; height: 100px; margin-top: 3rem;" src="{{ asset('images/default_profile.jpg') }}" alt="Default Profile Picture" >
+            @endif
+        </div>
+
+        <h2 style="text-transform: uppercase; ">{{ Auth::user()->lecturer->name1 }}</h2>
+        <h3 style="text-transform: uppercase;">L00{{ Auth::user()->lecturer->id }}</h3>
+
+    </div>
     {{-- <p>lecturer </p> --}}
-    <h2>{{ Auth::user()->lecturer->name1 }}</h2>
+
     <a href="#">
         <i class="fa fa-user-o" aria-hidden="true"></i> My Drive
     </a>
     <a href="{{ route( "code-generate" ) }}">
         <i class="fa fa-laptop" aria-hidden="true"></i> CODE GENERATE
     </a>
-    <a href="#">
-        <i class="fa fa-clone" aria-hidden="true"></i> Shared with Me
+    <a href="{{ route('lecturerProfile_update', ((Auth::user()->lecturer->id))) }}">
+        <i class="fa fa-clone" aria-hidden="true"></i> PROFILE
     </a>
     <!-- Add other sidebar links as needed -->
 </aside>

@@ -14,7 +14,7 @@ class AdminController extends Controller
         // Pass $students to your view
         return view('admin.view-students', ['students' => $students]);
 
-        
+
     }
 
 
@@ -37,6 +37,11 @@ class AdminController extends Controller
 
         return view('admin.admin-viewLecturers', compact('lecturers'));
 
+    }
+
+    public function viewLectures(){
+        $students = Student::all();
+        return view('admin.admin-viewLectures',  ['students' => $students]);
     }
 
     public function selectYear(){
