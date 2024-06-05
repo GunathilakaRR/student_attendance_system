@@ -1,3 +1,5 @@
+
+
 <style>
     /* Sidebar CSS */
     body{
@@ -95,8 +97,12 @@
     <a href="{{ route( "code-generate" ) }}">
         <i class="fa fa-laptop" aria-hidden="true"></i> CODE GENERATE
     </a>
-    <a href="{{ route('lecturerProfile_update', ((Auth::user()->lecturer->id))) }}">
+    <a href="{{ route('lecturerProfile_update', Auth::user()->lecturer->id) }}">
         <i class="fa fa-clone" aria-hidden="true"></i> PROFILE
     </a>
+    <a href="{{ route('view_assigned_lectures', Auth::user()->lecturer->id) }}">
+        <i class="fa fa-clone" aria-hidden="true"></i> LECTURES
+    </a>
+
     <!-- Add other sidebar links as needed -->
 </aside>

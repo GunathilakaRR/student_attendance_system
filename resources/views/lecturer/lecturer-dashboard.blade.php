@@ -6,7 +6,7 @@
             {{ __('Lecturer Dashboard') }}
         </h2>
     </x-slot> --}}
-
+   
     <style>
         .container {
             display: flex;

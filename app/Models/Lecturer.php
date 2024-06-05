@@ -23,5 +23,14 @@ class Lecturer extends Model
         // Add other lecturer details here
     ];
 
+    public function lectures()
+    {
+        return $this->belongsToMany(Lecture::class);
+    }
+
+    public function courseCodes()
+    {
+        return $this->hasMany(CourseCode::class);
+    }
 
 }

@@ -39,6 +39,7 @@ Route::get('code-generate', [LecturerController::class, 'codeGenerate'])->name('
 Route::post('otc-generate', [LecturerController::class, 'otcGenerate'])->name('otc-generate');
 Route::get('lecturerProfile_update/{id}', [LecturerController::class, 'LecturerProfileUpdate'])->name('lecturerProfile_update');
 Route::post('update-profile/{id}', [LecturerController::class, 'UpdateProfile'])->name('lupdate-profile');
+Route::get('view_assigned_lectures/{id}', [LecturerController::class, 'ViewAssignedlectures'])->name('view_assigned_lectures');
 
 
 
@@ -50,4 +51,6 @@ Route::get('view-lectures', [AdminController::class, 'viewLectures'])->name('vie
 Route::get('selectYear', [AdminController::class, 'selectYear'])->name('selectYear');
 Route::get('add_newLecture', [AdminController::class, 'addNewLecture'])->name('add-newLecture');
 Route::post('add_lecture', [AdminController::class, 'AddLecture'])->name('add_lecture');
+Route::get('assign-lecturer', [AdminController::class, 'ShowAssignForm'])->name('assign-lecturer');
+Route::post('assign-lecturer', [AdminController::class, 'AssignLecturer'])->name('assign-lecturer');
 

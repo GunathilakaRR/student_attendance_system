@@ -16,4 +16,14 @@ class Lecture extends Model
     'credits',
     ];
 
+    public function lecturers()
+    {
+        return $this->belongsToMany(Lecturer::class);
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
 }

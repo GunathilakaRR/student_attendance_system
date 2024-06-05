@@ -132,6 +132,14 @@
                                                 placeholder="country" name="phone_number"
                                                 value="+94" style="text-transform: capitalize;"></div>
                                     </div>
+
+                                    <div class="d-flex justify-content-between align-items-center mb-3 mt-5">
+                                        <h4 style="text-transform: capitalize;" class="text-right">Assigned Lectures</h4>
+                                    </div>
+
+                                    @foreach($lecturers->lectures as $lecture)
+                                        <span style="text-transform: capitalize">{{ $lecture->title }}</span><br>
+                                    @endforeach
                                     {{-- <div class="row mt-3">
                                         <div class="col-md-12"><label class="labels">Mobile Number</label><input
                                                 type="text" class="form-control" placeholder="enter phone number"

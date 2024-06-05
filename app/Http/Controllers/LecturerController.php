@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Lecturer;
+use App\Models\Lecture;
 use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 
 
 class LecturerController extends Controller
@@ -12,34 +15,32 @@ class LecturerController extends Controller
 
 
     public function codeGenerate(){
-
-        return view('lecturer.lecturer-code-generate');
+        $lectures = Lecture::all();
+        return view('lecturer.lecturer-code-generate', compact('lectures'));
     }
+
 
 
     public function otcGenerate(Request $request){
 
-        {
-            $request->validate([
-                'lecture_code' => 'required|string',
-            ]);
+   
+        $request->validate([
+            'course_id' => 'required|exists:lectures,id',
+        ]);
 
-            // Generate random 4-digit string
-            $randomString = str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
+        $lecture = Lecture::findOrFail($request->course_id);
 
-            // Concatenate lecture code with random string to create one-time code
-            $oneTimeCode = $request->lecture_code . $randomString;
+        $oneTimeCode = $lecture->code . Str::random(4);
+        $expiration = now()->addSeconds(30)->timestamp;;
 
-            // Store code in session
-            $request->session()->put('one_time_code', $oneTimeCode);
 
-            return redirect()->back()->with('success', 'One-time code generated successfully.');
-        }
+        return redirect()->back()->with([
+            'success' => 'One-time code generated successfully.',
+            'one_time_code' => $oneTimeCode,
+            'expiration' => $expiration,
+        ]);
 
-        // dd($request);
-        // $lectureCode = $request->input('lec-code');
 
-        // return view('lecturer.lecturer-code-generate');
     }
 
 
@@ -48,13 +49,11 @@ class LecturerController extends Controller
 
         $lecturers = Lecturer::find($id);
         return view('lecturer.lecturer-update', compact('lecturers'));
-
-
     }
 
 
-    public function UpdateProfile(Request $request, $id){
 
+    public function UpdateProfile(Request $request, $id){
         //dd($request);
 
         $validatedData = $request->validate([
@@ -76,14 +75,15 @@ class LecturerController extends Controller
         $lecturer->update($validatedData);
 
         return redirect()->back()->with('success', 'Profile updated successfully.');
-
-
-
-
     }
 
 
 
+    public function ViewAssignedlectures($id){
+
+        $lecturer = Lecturer::with('lectures')->findOrFail($id);
+        return view('lecturer.lecturer-viewAssigned-lectures', compact('lecturer'));
+    }
 
 
 

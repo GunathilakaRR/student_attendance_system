@@ -103,7 +103,16 @@
                                 <tr>
                                     <td style="text-transform: uppercase">{{ $lecture->code }}</td>
                                     <td style="text-transform: uppercase">{{ $lecture->title }}</td>
-                                    <td>{{ $lecture->lecturer }}</td>
+                                    <td>
+                                        @if($lecture->lecturers->isEmpty())
+                                            <em>No lecturers assigned</em>
+                                        @else
+                                            @foreach($lecture->lecturers as $lecturer)
+                                                <span style="text-transform: capitalize">{{ $lecturer->name1 }} {{ " " }} {{ $lecturer->name2 }}</span><br>
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                    {{-- <td style="text-transform: uppercase">{{ $lecture->name1 }}</td> --}}
                                     {{-- <td>
                                         @if ($student->image)
                                             <img style="object-fit: cover; border-radius: 50%; width: 50px; height: 50px; " src="{{ asset('storage/' . $student->image) }}" alt="Profile Picture">
@@ -112,10 +121,9 @@
                                         @endif
                                     </td> --}}
                                     <td>
-                                        <a href=""><i class="fas fa-edit btn btn-primary" title="Assign a Lecturer"></i></a>
+                                        <a href="{{ url('assign-lecturer') }}"><i class="fas fa-edit btn btn-primary" title="Assign a Lecturer"></i></a>
                                         <a href="#"><i class="fas fa-trash-alt btn btn-danger" title="Delete"></i></a>
-                                        <a href="{{ url('admin-viewStudent/' . $lecture->id) }}"><i
-                                                class="fas fa-eye btn btn-success" title="View More"></i></a>
+                                        <a href="{{ url('admin-viewStudent/' . $lecture->id) }}"><i class="fas fa-eye btn btn-success" title="View More"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -129,10 +137,5 @@
         </div>
     </body>
 
-
-
 </html>
-
-
-
 </x-app-layout>

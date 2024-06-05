@@ -35,14 +35,17 @@ class AdminController extends Controller
     public function adminViewLecturer($id){
 
         $lecturers = Lecturer::find($id);
+        $lectures = Lecture::with('lecturers')->get();
 
-        return view('admin.admin-viewLecturers', compact('lecturers'));
+        return view('admin.admin-viewLecturers', compact('lecturers', 'lectures'));
 
     }
 
     public function viewLectures(){
-        $lectures = Lecture::all();
-        return view('admin.admin-viewLectures',  ['lectures' => $lectures]);
+        // $lectures = Lecture::all();
+        // return view('admin.admin-viewLectures',  ['lectures' => $lectures]);
+        $lectures = Lecture::with('lecturers')->get();
+        return view('admin.admin-viewLectures', compact('lectures'));
     }
 
     public function addNewLecture(){
@@ -62,6 +65,29 @@ class AdminController extends Controller
         return redirect()->back()->with('success','Lecture added successfully');
     }
 
+
+    public function ShowAssignForm(){
+
+        $lecturers = Lecturer::all();
+        $lectures = Lecture::all();
+        return view('admin.admin-assignLecturer', compact('lecturers', 'lectures'));
+
+    }
+
+
+    public function AssignLecturer(Request $request){
+
+        $validatedData = $request->validate([
+            'lecture_id' => 'required|exists:lectures,id',
+            'lecturer_id' => 'required|exists:lecturers,id',
+        ]);
+
+        $lecture = Lecture::find($request->lecture_id);
+        $lecture->lecturers()->attach($request->lecturer_id);
+
+        return redirect()->back()->with('success', 'Lecturer assigned to lecture successfully.');
+
+    }
 
 
 
