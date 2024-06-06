@@ -83,10 +83,16 @@
                 <div class="home-section">
 
                     <a href="{{ route('add-newLecture') }}">
-                        <button class="btn" style="background-color: #e84424; color: #ffff">Add New Lecture</button>
+                        <button class="btn mb-5" style="background-color: #e84424; color: #ffff">Add New Lecture</button>
                     </a>
 
 
+
+                    @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
                     <table class="table">
                         <thead>
@@ -112,18 +118,10 @@
                                             @endforeach
                                         @endif
                                     </td>
-                                    {{-- <td style="text-transform: uppercase">{{ $lecture->name1 }}</td> --}}
-                                    {{-- <td>
-                                        @if ($student->image)
-                                            <img style="object-fit: cover; border-radius: 50%; width: 50px; height: 50px; " src="{{ asset('storage/' . $student->image) }}" alt="Profile Picture">
-                                        @else
-                                            <img style="object-fit: cover; border-radius: 50%; width: 50px; height: 50px; " src="{{ asset('images/default_profile.jpg') }}" alt="Default Profile Picture">
-                                        @endif
-                                    </td> --}}
                                     <td>
                                         <a href="{{ url('assign-lecturer') }}"><i class="fas fa-edit btn btn-primary" title="Assign a Lecturer"></i></a>
-                                        <a href="#"><i class="fas fa-trash-alt btn btn-danger" title="Delete"></i></a>
-                                        <a href="{{ url('admin-viewStudent/' . $lecture->id) }}"><i class="fas fa-eye btn btn-success" title="View More"></i></a>
+                                     <a href="{{ route('delete-lecture', $lecture->id) }}"><i class="fas fa-trash-alt btn btn-danger" title="Delete"></i></a>
+                                        <a href="{{ route('view-lecture-info-' , $lecture->code) }}"><i class="fas fa-eye btn btn-success" title="View More"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

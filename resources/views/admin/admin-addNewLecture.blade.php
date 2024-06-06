@@ -101,14 +101,24 @@
                                     value="{{ old('title') }}" required>
                             </div>
                             <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea name="description" class="form-control" id="description">{{ old('description') }}</textarea>
-                            </div>
-                            <div class="mb-3">
                                 <label for="course_code" class="form-label">Course Code</label>
                                 <input type="text" name="code" class="form-control" id="course_code"
                                     value="{{ old('course_code') }}" required>
                             </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea name="description" class="form-control" id="description">{{ old('description') }}</textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="start_time" class="form-label">Start Time</label>
+                                <input type="time" name="start_time" class="form-control" id="start_time" value="{{ old('start_time') }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="end_time" class="form-label">End Time</label>
+                                <input type="time" name="end_time" class="form-control" id="end_time" value="{{ old('end_time') }}" required>
+                            </div>
+
                             <button type="submit" class="btn " style="background-color: #e84424; color:#ffff">Add
                                 Lecture</button>
                         </form>

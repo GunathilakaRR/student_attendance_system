@@ -59,8 +59,9 @@ class AdminController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'code' => 'required|string|max:50',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i',
         ]);
-
         Lecture::create($validatedData);
         return redirect()->back()->with('success','Lecture added successfully');
     }
@@ -71,24 +72,36 @@ class AdminController extends Controller
         $lecturers = Lecturer::all();
         $lectures = Lecture::all();
         return view('admin.admin-assignLecturer', compact('lecturers', 'lectures'));
-
     }
 
 
     public function AssignLecturer(Request $request){
-
+        //dd($request);
         $validatedData = $request->validate([
             'lecture_id' => 'required|exists:lectures,id',
             'lecturer_id' => 'required|exists:lecturers,id',
         ]);
-
         $lecture = Lecture::find($request->lecture_id);
         $lecture->lecturers()->attach($request->lecturer_id);
 
         return redirect()->back()->with('success', 'Lecturer assigned to lecture successfully.');
-
     }
 
+
+    public function ViewLectureInfo($code){
+
+        $lecture = Lecture::where('code', $code)->with('lecturers')->firstOrFail();
+        return view('admin.admin-viewLectureInfo', compact('lecture'));
+    }
+
+
+
+    public function DeleteLecture($id){
+        $lecture = Lecture::findOrFail($id);
+        $lecture->delete();
+
+        return redirect()->back()->with('success', 'Lecture deleted successfully.');
+    }
 
 
     public function selectYear(){

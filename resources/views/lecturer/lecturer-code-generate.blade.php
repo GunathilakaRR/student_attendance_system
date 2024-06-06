@@ -33,28 +33,6 @@
             <div class="container">
 
 
-                {{-- <div class="alert alert-success">
-                    @if (session('success'))
-                        <p>{{ session('success') }}</p>
-                    @endif
-                    @if (session('one_time_code'))
-                        <p>One-Time Code: {{ session('one_time_code') }}</p>
-                        <p>Expires in: <span id="expiration-countdown"></span></p>
-                    @endif
-                </div> --}}
-
-                <form action="{{ route('otc-generate') }}" method="POST">
-                    @csrf
-                    <select name="course_id" id="course_id">
-                        @foreach ($lectures as $lecture)
-                            <option value="{{ $lecture->id }}">{{ $lecture->title }}</option>
-                        @endforeach
-                    </select>
-                    <button type="submit" class="btn" style="background-color: green; color: white;">Generate
-                        OTC</button>
-                </form>
-
-
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
@@ -94,6 +72,16 @@
                 @endif
 
 
+                <form action="{{ route('otc-generate') }}" method="POST">
+                    @csrf
+                    <select name="course_id" id="course_id">
+                        @foreach ($lectures as $lecture)
+                            <option value="{{ $lecture->id }}">{{ $lecture->title }}</option>
+                        @endforeach
+                    </select>
+                    <button type="submit" class="btn" style="background-color: green; color: white;">Generate
+                        OTC</button>
+                </form>
 
 
 

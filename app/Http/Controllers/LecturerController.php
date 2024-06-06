@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Lecturer;
 use App\Models\Lecture;
@@ -15,7 +16,9 @@ class LecturerController extends Controller
 
 
     public function codeGenerate(){
-        $lectures = Lecture::all();
+        // $lectures = Lecture::all();
+        $lecturer = Auth::user()->lecturer;
+        $lectures = $lecturer->lectures;
         return view('lecturer.lecturer-code-generate', compact('lectures'));
     }
 
@@ -23,7 +26,7 @@ class LecturerController extends Controller
 
     public function otcGenerate(Request $request){
 
-   
+
         $request->validate([
             'course_id' => 'required|exists:lectures,id',
         ]);
@@ -42,7 +45,6 @@ class LecturerController extends Controller
 
 
     }
-
 
 
     public function LecturerProfileUpdate($id){

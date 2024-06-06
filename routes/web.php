@@ -53,4 +53,6 @@ Route::get('add_newLecture', [AdminController::class, 'addNewLecture'])->name('a
 Route::post('add_lecture', [AdminController::class, 'AddLecture'])->name('add_lecture');
 Route::get('assign-lecturer', [AdminController::class, 'ShowAssignForm'])->name('assign-lecturer');
 Route::post('assign-lecturer', [AdminController::class, 'AssignLecturer'])->name('assign-lecturer');
+Route::get('view-lecture-info-/{code}', [AdminController::class, 'ViewLectureInfo'])->name('view-lecture-info-');
+Route::get('delete-lecture/{id}', [AdminController::class, 'DeleteLecture'])->name('delete-lecture');
 
