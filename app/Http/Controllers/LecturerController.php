@@ -83,7 +83,7 @@ class LecturerController extends Controller
 
     public function ViewAssignedlectures($id){
 
-        $lecturer = Lecturer::with('lectures')->findOrFail($id);
+        $lecturer = Lecturer::with('lectures.schedules')->findOrFail($id);
         return view('lecturer.lecturer-viewAssigned-lectures', compact('lecturer'));
     }
 

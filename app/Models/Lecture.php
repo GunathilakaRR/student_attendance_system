@@ -14,8 +14,6 @@ class Lecture extends Model
     'title',
     'description',
     'credits',
-    'start_time',
-    'end_time',
     ];
 
     public function lecturers()
@@ -23,9 +21,19 @@ class Lecture extends Model
         return $this->belongsToMany(Lecturer::class);
     }
 
-    public function attendances()
+    public function schedules()
     {
-        return $this->hasMany(Attendance::class);
+        return $this->hasMany(Schedule::class);
     }
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class,'lecture_student');
+    }
+
+    // public function attendances()
+    // {
+    //     return $this->hasMany(Attendance::class);
+    // }
 
 }

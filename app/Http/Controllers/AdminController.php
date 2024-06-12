@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\Lecturer;
 use App\Models\Lecture;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -59,10 +60,30 @@ class AdminController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'code' => 'required|string|max:50',
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i',
+            'day' => 'required|array',
+            'day.*' => 'required|string|max:255',
+            'start_time' => 'required|array',
+            'start_time.*' => 'required|date_format:H:i',
+            'end_time' => 'required|array',
+            'end_time.*' => 'required|date_format:H:i',
         ]);
-        Lecture::create($validatedData);
+
+        $lecture = Lecture::create([
+            'title' => $request->title,
+            'code' => $request->code,
+            'description' => $request->description,
+        ]);
+
+        foreach ($request->day as $index => $day) {
+            Schedule::create([
+                'lecture_id' => $lecture->id,
+                'day' => $day,
+                'start_time' => $request->start_time[$index],
+                'end_time' => $request->end_time[$index],
+            ]);
+        }
+
+
         return redirect()->back()->with('success','Lecture added successfully');
     }
 

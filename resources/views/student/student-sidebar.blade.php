@@ -80,7 +80,7 @@
             @if (Auth::user()->student->image)
             <img style="object-fit: cover; border-radius: 50%; width: 100px; height: 100px; margin-top: 3rem;" src="{{ asset('storage/' . Auth::user()->student->image ) }}" alt="Profile Picture">
         @else
-            <img class="rounded-circle mt-5" width="100px" src="{{ asset('images/default_profile.jpg') }}" alt="Default Profile Picture" >
+            <img style="object-fit: cover; border-radius: 50%; width: 100px; height: 100px; margin-top: 3rem;" src="{{ asset('images/default_profile.jpg') }}" alt="Default Profile Picture" >
         @endif
         </div>
         <h2 style="text-transform: uppercase; margin-top: 1rem;">{{ Auth::user()->student->name1 }}</h2>
@@ -100,8 +100,11 @@
         <a href="#">
             <i class="fa fa-clone" aria-hidden="true"></i> CV BUILDER
         </a>
-        <a href="{{ route('studentProfile_update', (Auth::user()->student->id)) }}">
+        <a href="{{ route('studentProfile_update', Auth::user()->student->id) }}">
             <i class="fa fa-clone" aria-hidden="true"></i> PROFILE
+        </a>
+        <a href="{{ route('register_for_courses') }}">
+            <i class="fa fa-clone" aria-hidden="true"></i> REGISTER FOR COURSES
         </a>
 
 

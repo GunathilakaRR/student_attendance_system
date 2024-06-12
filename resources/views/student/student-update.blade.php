@@ -120,7 +120,7 @@
                                     </div>
                                 @endif
 
-                                <form action="{{ route('update-profile', $students->id) }}" method="POST"
+                                <form action="{{ route('student_profile_update', $students->id) }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="p-3 py-5">

@@ -31,14 +31,16 @@ Route::get('student-cvbuilder', [StudentController::class, 'CvBilder'])->name('s
 Route::get('student-attendance', [StudentController::class, 'StudentAttendance'])->name('student-attendance');
 Route::post('attendance_mark', [StudentController::class, 'AttendanceMark'])->name('attendance_mark');
 Route::get('studentProfile_update/{id}', [StudentController::class, 'StudentProfileUpdate'])->name('studentProfile_update');
-Route::post('update-profile/{id}', [StudentController::class, 'UpdateProfile'])->name('update-profile');
-
+// Route::post('update-profile/{id}', [StudentController::class, 'UpdateProfile'])->name('update-profile');
+Route::post('student_profile_update/{id}', [StudentController::class, 'Student_Profile_Update'])->name('student_profile_update');
+Route::get('register_for_courses', [StudentController::class, 'RegisterForCourses'])->name('register_for_courses');
+Route::post('register_store', [StudentController::class, 'Register'])->name('register.store');
 
 
 Route::get('code-generate', [LecturerController::class, 'codeGenerate'])->name('code-generate');
 Route::post('otc-generate', [LecturerController::class, 'otcGenerate'])->name('otc-generate');
 Route::get('lecturerProfile_update/{id}', [LecturerController::class, 'LecturerProfileUpdate'])->name('lecturerProfile_update');
-Route::post('update-profile/{id}', [LecturerController::class, 'UpdateProfile'])->name('lupdate-profile');
+Route::post('update-profile/{id}', [LecturerController::class, 'UpdateProfile'])->name('update-profile');
 Route::get('view_assigned_lectures/{id}', [LecturerController::class, 'ViewAssignedlectures'])->name('view_assigned_lectures');
 
 

@@ -61,7 +61,7 @@ class User extends Authenticatable
 
 
 
-    
+
 
     public function admin()
     {
@@ -78,4 +78,5 @@ class User extends Authenticatable
         return $this->hasOne(Lecturer::class);
     }
 
+    
 }
