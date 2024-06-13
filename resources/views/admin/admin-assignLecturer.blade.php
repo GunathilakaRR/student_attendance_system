@@ -88,7 +88,7 @@
 
                     <div class="container mt-5">
                         <h1>Assign Lecturer to Lecture</h1>
-                        @if(session('success'))
+                        @if (session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
                             </div>
@@ -97,22 +97,26 @@
                         <form action="{{ route('assign-lecturer') }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label for="lecture" class="form-label">Select Lecture</label>
-                                <select class="form-select" id="lecture" name="lecture_id" required>
-                                    @foreach($lectures as $lecture)
-                                        <option value="{{ $lecture->id }}">{{ $lecture->code }}{{ " " }}{{ $lecture->title }}</option>
-                                    @endforeach
-                                </select>
+
+                                <div><label class="labels">Selected Lecture</label>
+                                    <input type="hidden" class="form-control" value="{{ $lectures->id }}" name="lecture_id">
+                                    <input type="text" class="form-control"
+                                        value="{{ $lectures->code }} {{ $lectures->title }}"
+                                        style="text-transform: uppercase;" disabled>
+                                </div>
+
                             </div>
                             <div class="mb-3">
                                 <label for="lecturer" class="form-label">Select Lecturer</label>
                                 <select class="form-select" id="lecturer" name="lecturer_id" required>
-                                    @foreach($lecturers as $lecturer)
-                                        <option value="{{ $lecturer->id }}">{{  $lecturer->name1 }}{{ " " }}{{  $lecturer->name2 }}</option>
+                                    @foreach ($lecturers as $lecturer)
+                                        <option value="{{ $lecturer->id }}">
+                                            {{ $lecturer->name1 }}{{ ' ' }}{{ $lecturer->name2 }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <button type="submit" class="btn" style="background-color: #e84424; color: #ffff">Assign Lecturer</button>
+                            <button type="submit" class="btn" style="background-color: #e84424; color: #ffff">Assign
+                                Lecturer</button>
                         </form>
                     </div>
 
@@ -125,7 +129,7 @@
 
 
 
-</html>
+    </html>
 
 
 

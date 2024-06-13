@@ -119,7 +119,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ url('assign-lecturer') }}"><i class="fas fa-edit btn btn-primary" title="Assign a Lecturer"></i></a>
+                                        <a href="{{ url('assign-lecturer/'. $lecture->id) }}"><i class="fas fa-edit btn btn-primary" title="Assign a Lecturer"></i></a>
                                      <a href="{{ route('delete-lecture', $lecture->id) }}"><i class="fas fa-trash-alt btn btn-danger" title="Delete"></i></a>
                                         <a href="{{ route('view-lecture-info-' , $lecture->code) }}"><i class="fas fa-eye btn btn-success" title="View More"></i></a>
                                     </td>

@@ -17,8 +17,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
+])->group(function () {Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 });
@@ -53,7 +52,7 @@ Route::get('view-lectures', [AdminController::class, 'viewLectures'])->name('vie
 Route::get('selectYear', [AdminController::class, 'selectYear'])->name('selectYear');
 Route::get('add_newLecture', [AdminController::class, 'addNewLecture'])->name('add-newLecture');
 Route::post('add_lecture', [AdminController::class, 'AddLecture'])->name('add_lecture');
-Route::get('assign-lecturer', [AdminController::class, 'ShowAssignForm'])->name('assign-lecturer');
+Route::get('assign-lecturer/{id}', [AdminController::class, 'ShowAssignForm'])->name('assign-lecturer');
 Route::post('assign-lecturer', [AdminController::class, 'AssignLecturer'])->name('assign-lecturer');
 Route::get('view-lecture-info-/{code}', [AdminController::class, 'ViewLectureInfo'])->name('view-lecture-info-');
 Route::get('delete-lecture/{id}', [AdminController::class, 'DeleteLecture'])->name('delete-lecture');

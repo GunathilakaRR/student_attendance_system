@@ -6,6 +6,7 @@ use App\Models\Lecturer;
 use App\Models\Lecture;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -85,13 +86,14 @@ class AdminController extends Controller
 
 
         return redirect()->back()->with('success','Lecture added successfully');
+
     }
 
 
-    public function ShowAssignForm(){
+    public function ShowAssignForm($id){
 
         $lecturers = Lecturer::all();
-        $lectures = Lecture::all();
+        $lectures = Lecture::findOrFail($id);
         return view('admin.admin-assignLecturer', compact('lecturers', 'lectures'));
     }
 

@@ -6,161 +6,7 @@
             {{ __('User Dashboard') }}
         </h2>
     </x-slot> --}}
-
-
-{{--
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Side Navigation Bar</title>
-        <link rel="stylesheet" href="student_dashboard.css">
-        <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-
-        <style>
-            @import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
-
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  list-style: none;
-  text-decoration: none;
-  font-family: 'Josefin Sans', sans-serif;
-}
-
-body{
-   background-color: #f3f5f9;
-}
-
-.wrapper{
-  display: flex;
-  position: relative;
-}
-
-.wrapper .sidebar{
-  width: 200px;
-  height: 100%;
-  background: #594f8d;
-  padding: 30px 0px;
-  position: fixed;
-}
-
-.wrapper .sidebar h2{
-  color: #fff;
-  text-transform: uppercase;
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.wrapper .sidebar ul li{
-  padding: 15px;
-  border-bottom: 1px solid #bdb8d7;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  border-top: 1px solid rgba(255,255,255,0.05);
-}
-
-.wrapper .sidebar ul li a{
-  color: #bdb8d7;
-  display: block;
-}
-
-.wrapper .sidebar ul li a .fas{
-  width: 25px;
-}
-
-.wrapper .sidebar ul li:hover{
-  background-color: #594f8d;
-}
-
-.wrapper .sidebar ul li:hover a{
-  color: #fff;
-}
-
-.wrapper .sidebar .social_media{
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-}
-
-.wrapper .sidebar .social_media a{
-  display: block;
-  width: 40px;
-  background: #594f8d;
-  height: 40px;
-  line-height: 45px;
-  text-align: center;
-  margin: 0 5px;
-  color: #bdb8d7;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
-.wrapper .main_content{
-  width: 100%;
-  margin-left: 200px;
-}
-
-.wrapper .main_content .header{
-  padding: 20px;
-  background: #fff;
-  color: #717171;
-  border-bottom: 1px solid #e0e4e8;
-}
-
-.wrapper .main_content .info{
-  margin: 20px;
-  color: #717171;
-  line-height: 25px;
-}
-
-.wrapper .main_content .info div{
-  margin-bottom: 20px;
-}
-
-        </style>
-
-
-    </head>
-
-
-    <body>
-
-    <div class="wrapper">
-        <div class="sidebar">
-
-            <h2>{{ Auth::user()->student->name1 }}</h2>
-            <h2>{{ Auth::user()->registration_number }}</h2>
-            <ul>
-                <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
-                <li><a href="#"><i class="fas fa-user"></i>Profile</a></li>
-                <li><a href="#"><i class="fas fa-address-card"></i>About</a></li>
-                <li><a href="{{ route('student-cvbuilder') }}"><i class="fas fa-project-diagram"></i>CV Builder</a></li>
-                <li><a href="#"><i class="fas fa-blog"></i>Blogs</a></li>
-                <li><a href="#"><i class="fas fa-address-book"></i>Contact</a></li>
-                <li><a href="#"><i class="fas fa-map-pin"></i>Map</a></li>
-            </ul>
-            <div class="social_media">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-        <div class="main_content">
-            <div class="header">Welcome!! Have a nice day.</div>
-            <div class="info">
-              <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A sed nobis ut exercitationem atque accusamus sit natus officiis totam blanditiis at eum nemo, nulla et quae eius culpa eveniet voluptatibus repellat illum tenetur, facilis porro. Quae fuga odio perferendis itaque alias sint, beatae non maiores magnam ad, veniam tenetur atque ea exercitationem earum eveniet totam ipsam magni tempora aliquid ullam possimus? Tempora nobis facere porro, praesentium magnam provident accusamus temporibus! Repellendus harum veritatis itaque molestias repudiandae ea corporis maiores non obcaecati libero, unde ipsum consequuntur aut consectetur culpa magni omnis vero odio suscipit vitae dolor quod dignissimos perferendis eos? Consequuntur!</div>
-              <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A sed nobis ut exercitationem atque accusamus sit natus officiis totam blanditiis at eum nemo, nulla et quae eius culpa eveniet voluptatibus repellat illum tenetur, facilis porro. Quae fuga odio perferendis itaque alias sint, beatae non maiores magnam ad, veniam tenetur atque ea exercitationem earum eveniet totam ipsam magni tempora aliquid ullam possimus? Tempora nobis facere porro, praesentium magnam provident accusamus temporibus! Repellendus harum veritatis itaque molestias repudiandae ea corporis maiores non obcaecati libero, unde ipsum consequuntur aut consectetur culpa magni omnis vero odio suscipit vitae dolor quod dignissimos perferendis eos? Consequuntur!</div>
-              <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A sed nobis ut exercitationem atque accusamus sit natus officiis totam blanditiis at eum nemo, nulla et quae eius culpa eveniet voluptatibus repellat illum tenetur, facilis porro. Quae fuga odio perferendis itaque alias sint, beatae non maiores magnam ad, veniam tenetur atque ea exercitationem earum eveniet totam ipsam magni tempora aliquid ullam possimus? Tempora nobis facere porro, praesentium magnam provident accusamus temporibus! Repellendus harum veritatis itaque molestias repudiandae ea corporis maiores non obcaecati libero, unde ipsum consequuntur aut consectetur culpa magni omnis vero odio suscipit vitae dolor quod dignissimos perferendis eos? Consequuntur!</div>
-          </div>
-        </div>
-    </div>
-
-    </body>
-    </html> --}}
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         .container {
             padding: 0;
@@ -183,7 +29,105 @@ body{
 
         <div class="home-section">
             <!-- Your home section content -->
-            <p>Content goes here</p>
+            {{-- <p>Content goes here</p> --}}
+
+            <div class="main_content">
+                <h1 style="font-size: 27px;" >Hello <span style="text-transform: capitalize;">{{ Auth::user()->student->name1 }},</span>  Welcome Back !! <i class="fa-solid fa-hand fa-xl fa-bounce" style="color: #594f8d;"></i></h1>
+            </div>
+
+
+
+
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="mt-5">
+                        <h2>Time Table</h2>
+
+
+                        {{-- @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif --}}
+
+
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Course Code</th>
+                                    <th>Title</th>
+                                    <th>Day of the Week</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($lectures as $lecture)
+                                    @foreach ($lecture->schedules as $schedule)
+                                        <tr>
+                                            @if ($loop->first) <!-- Show lecture details only for the first schedule -->
+                                                <td rowspan="{{ $lecture->schedules->count() }}">{{ $lecture->code }}</td>
+                                                <td rowspan="{{ $lecture->schedules->count() }}">{{ $lecture->title }}</td>
+                                            @endif
+                                            <td>{{ $schedule->day }}</td>
+                                            <td>{{ $schedule->formatted_start_time }}</td>
+                                            <td>{{ $schedule->formatted_end_time }}</td>
+                                        </tr>
+                                    @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="5">No registered lectures.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+
+
+                        {{-- <table class="table table-bordered" style="width: 100%; border-collapse: collapse; margin-top: 20px; border: 1px solid #dee2e6;">
+                            <thead>
+                                <tr style="background-color: #f8f9fa;">
+                                    <th style="border: 1px solid #dee2e6; padding: 8px;">Time</th>
+                                    @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
+                                        <th style="border: 1px solid #dee2e6; padding: 8px;">{{ $day }}</th>
+                                    @endforeach
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for ($hour = 8; $hour <= 18; $hour++)
+                                    <tr>
+                                        <td style="border: 1px solid #dee2e6; padding: 8px;">{{ $hour }}:00 - {{ $hour + 1 }}:00</td>
+                                        @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
+                                            <td style="border: 1px solid #dee2e6; padding: 8px;">
+                                                @foreach ($lectures as $lecture)
+                                                    @foreach ($lecture->schedules as $schedule)
+                                                        @if ($schedule->day == $day && date('H', strtotime($schedule->start_time)) <= $hour && date('H', strtotime($schedule->end_time)) > $hour)
+                                                            <div style="padding: 5px; background-color: #e9ecef; margin-bottom: 5px; border-radius: 4px;">
+                                                                <strong>{{ $lecture->title }}</strong><br>
+                                                                {{ date('H:i', strtotime($schedule->start_time)) }} - {{ date('H:i', strtotime($schedule->end_time)) }}
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                            </td>
+                                        @endforeach
+                                    </tr>
+                                @endfor
+                            </tbody>
+                        </table> --}}
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
 
 
         </div>

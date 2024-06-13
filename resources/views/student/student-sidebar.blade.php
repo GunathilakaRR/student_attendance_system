@@ -1,7 +1,8 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <style>
 
     /* Sidebar CSS */
@@ -92,19 +93,19 @@
             <i class="fa fa-user-o" aria-hidden="true"></i> DASHBOARD
         </a>
         <a href="{{ route("student-attendance") }}">
-            <i class="fa fa-laptop" aria-hidden="true"></i> ATTENDANCE
+            <i class="fa-solid fa-file" aria-hidden="true"></i> ATTENDANCE
         </a>
         <a href="#">
-            <i class="fa fa-clone" aria-hidden="true"></i> MARKS
+            <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> MARKS
         </a>
         <a href="#">
             <i class="fa fa-clone" aria-hidden="true"></i> CV BUILDER
         </a>
         <a href="{{ route('studentProfile_update', Auth::user()->student->id) }}">
-            <i class="fa fa-clone" aria-hidden="true"></i> PROFILE
+            <i class="fa-solid fa-user" aria-hidden="true"></i> PROFILE
         </a>
         <a href="{{ route('register_for_courses') }}">
-            <i class="fa fa-clone" aria-hidden="true"></i> REGISTER FOR COURSES
+            <i class="fa-solid fa-folder" aria-hidden="true"></i> REGISTER FOR COURSES
         </a>
 
 

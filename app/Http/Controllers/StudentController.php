@@ -29,23 +29,16 @@ class StudentController extends Controller
             'entered_code' => 'required|string',
         ]);
 
-        // Retrieve one-time code from session
         $oneTimeCode = $request->session()->get('one_time_code');
-
         if ($oneTimeCode && $oneTimeCode === $request->entered_code) {
-            // Codes match, mark attendance
-            // Your logic here
             return redirect()->back()->with('success', 'Attendance marked successfully.');
         } else {
-            // Codes do not match
             return redirect()->back()->with('error', 'Invalid one-time code.');
         }
     }
 
 
-    public function StudentProfileUpdate( $id)
-    {
-
+    public function StudentProfileUpdate( $id){
         $students = Student::find($id);
     return view('student.student-update', compact('students'));
     }
@@ -61,32 +54,21 @@ class StudentController extends Controller
             'student_registration_number' => 'required|string|max:255',
             'phone_number' => 'nullable|string|max:20',
             'profile_pic'=> 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-
         ]);
 
         $student = Student::find($id);
-
         if ($request->hasFile('profile_pic')) {
-
             $file = $request->file('profile_pic');
-
             $filename = time() . '.' . $file->getClientOriginalExtension();
-
             $path = $file->storeAs('profile_pictures', $filename, 'public');
-
             $validatedData['image'] = $path;
         }
-
-
         $student->update($validatedData);
-
         return redirect()->back()->with('success', 'Profile updated successfully.');
-
     }
 
 
     public function RegisterForCourses(){
-
         $lectures = Lecture::all();
         // $students = Student::all();
         return view('student.student-registerCourses', compact('lectures'));
@@ -94,21 +76,15 @@ class StudentController extends Controller
 
 
     public function Register(Request $request){
-
-        //dd($request);
-
         $request->validate([
             'lectures' => 'required|array',
             'lectures.*' => 'exists:lectures,id',
         ]);
-
         $user = Auth::user();
-        
         if (!$user->student) {
             return redirect()->back()->with('error', 'You are not registered as a student.');
         }
         $user->student->lectures()->sync($request->lectures);
-
         return redirect()->back()->with('success', 'Registration successful.');
     }
 

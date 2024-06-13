@@ -35,8 +35,6 @@
         @include('admin.admin-sidebar')
 
         <div class="home-section">
-
-            <p>Content goes here</p>
             <div class="container-fluid mt-4">
                 <div class="row">
 
@@ -47,7 +45,7 @@
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             No. Of Students</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $studentCount }}</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fa-solid fa-children fa-2x text-gray-300"></i>
@@ -65,7 +63,7 @@
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                             No. Of Lecturers</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $lecturerCount }}</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fa-solid fa-user-tie fa-2x text-gray-300"></i>

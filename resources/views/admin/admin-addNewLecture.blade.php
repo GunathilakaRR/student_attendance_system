@@ -88,11 +88,25 @@
 
                     <div class="container mt-5">
                         <h1>Add Lecture</h1>
+
+
                         @if (session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
                             </div>
                         @endif
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
+
+                        {{-- @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif --}}
 
 
                         <form action="{{ route('add_lecture') }}" method="POST">
@@ -114,6 +128,7 @@
 
                             <div id="schedules">
                                 <div class="schedule mb-3">
+
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label for="day" class="form-label">Day</label>
@@ -139,6 +154,10 @@
                                             <button type="button" class="btn btn-danger mt-2" onclick="removeSchedule(this)">Remove</button>
                                         </div>
                                     </div>
+
+
+
+
 
                                 </div>
                             </div>
