@@ -31,7 +31,31 @@
 
         <div class="home-section">
 
+
             <div class="container">
+                <h3>Enter One-Time Code for Attendance</h3>
+                @if (session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <form action="{{ route('attendance_mark') }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="one_time_code" class="form-label">One-Time Code</label>
+                        <input type="text" class="form-control" id="one_time_code" name="one_time_code" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            {{-- <div class="container">
 
                 @if (session()->has('one_time_code'))
                     <p>Stored One-Time Code: {{ session('one_time_code') }}</p>
@@ -59,7 +83,7 @@
                 </form>
 
 
-            </div>
+            </div> --}}
 
         </div>
     </div>

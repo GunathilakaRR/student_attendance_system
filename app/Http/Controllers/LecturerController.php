@@ -23,28 +23,48 @@ class LecturerController extends Controller
     }
 
 
+    public function otcGenerate(Request $request)
+{
+    $request->validate([
+        'course_id' => 'required|exists:lectures,id',
+    ]);
 
-    public function otcGenerate(Request $request){
+    $lecture = Lecture::findOrFail($request->course_id);
+
+    $oneTimeCode = $lecture->code . Str::random(4);
+    $expiration = now()->addSeconds(30);
+
+    // Store the one-time code in cache with expiration
+    Cache::put($oneTimeCode, $lecture->id, $expiration);
+
+    return redirect()->back()->with([
+        'success' => 'One-time code generated successfully.',
+        'one_time_code' => $oneTimeCode,
+        'expiration' => $expiration->timestamp,
+    ]);
+}
+
+    // public function otcGenerate(Request $request){
 
 
-        $request->validate([
-            'course_id' => 'required|exists:lectures,id',
-        ]);
+    //     $request->validate([
+    //         'course_id' => 'required|exists:lectures,id',
+    //     ]);
 
-        $lecture = Lecture::findOrFail($request->course_id);
+    //     $lecture = Lecture::findOrFail($request->course_id);
 
-        $oneTimeCode = $lecture->code . Str::random(4);
-        $expiration = now()->addSeconds(30)->timestamp;;
-
-
-        return redirect()->back()->with([
-            'success' => 'One-time code generated successfully.',
-            'one_time_code' => $oneTimeCode,
-            'expiration' => $expiration,
-        ]);
+    //     $oneTimeCode = $lecture->code . Str::random(4);
+    //     $expiration = now()->addSeconds(30)->timestamp;;
 
 
-    }
+    //     return redirect()->back()->with([
+    //         'success' => 'One-time code generated successfully.',
+    //         'one_time_code' => $oneTimeCode,
+    //         'expiration' => $expiration,
+    //     ]);
+
+
+    // }
 
 
     public function LecturerProfileUpdate($id){

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Student;
@@ -24,17 +24,42 @@ class StudentController extends Controller
 
     public function AttendanceMark(Request $request)
     {
-        // dd($request);
         $request->validate([
-            'entered_code' => 'required|string',
+            'one_time_code' => 'required|string',
         ]);
 
-        $oneTimeCode = $request->session()->get('one_time_code');
-        if ($oneTimeCode && $oneTimeCode === $request->entered_code) {
-            return redirect()->back()->with('success', 'Attendance marked successfully.');
-        } else {
-            return redirect()->back()->with('error', 'Invalid one-time code.');
+        $lectureId = Cache::get($request->one_time_code);
+
+        if (!$lectureId) {
+            return redirect()->back()->withErrors(['error' => 'Invalid or expired one-time code.']);
         }
+
+        // Assuming you have a way to get the currently logged-in student
+        $studentId = auth()->user()->student->id;
+
+        // Mark attendance for the student
+        // Attendance::create([
+        //     'student_id' => $studentId,
+        //     'lecture_id' => $lectureId,
+        //     'marked_at' => now(),
+        // ]);
+
+        // Remove the one-time code from cache after usage
+        Cache::forget($request->one_time_code);
+
+        return redirect()->back()->with('success', 'Attendance marked successfully.');
+
+        // // dd($request);
+        // $request->validate([
+        //     'entered_code' => 'required|string',
+        // ]);
+
+        // $oneTimeCode = $request->session()->get('one_time_code');
+        // if ($oneTimeCode && $oneTimeCode === $request->entered_code) {
+        //     return redirect()->back()->with('success', 'Attendance marked successfully.');
+        // } else {
+        //     return redirect()->back()->with('error', 'Invalid one-time code.');
+        // }
     }
 
 
