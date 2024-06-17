@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
 use App\Models\Student;
 use App\Models\Lecturer;
 use App\Models\Lecture;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Notifications\LecturerAssignedNotification;
 
 class AdminController extends Controller
 {
@@ -106,6 +108,8 @@ class AdminController extends Controller
         ]);
         $lecture = Lecture::find($request->lecture_id);
         $lecture->lecturers()->attach($request->lecturer_id);
+
+        // $lecturer->notify(new LecturerAssignedNotification($lecture));
 
         return redirect()->back()->with('success', 'Lecturer assigned to lecture successfully.');
     }

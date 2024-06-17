@@ -59,7 +59,7 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-
+    use Notifiable;
 
 
 
@@ -78,5 +78,5 @@ class User extends Authenticatable
         return $this->hasOne(Lecturer::class);
     }
 
-    
+
 }

@@ -62,7 +62,7 @@
                                 <tr>
                                     <th>Course Code</th>
                                     <th>Title</th>
-                                    <th>Day of the Week</th>
+                                    <th>Day</th>
                                     <th>Start Time</th>
                                     <th>End Time</th>
                                 </tr>
