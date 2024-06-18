@@ -13,5 +13,11 @@ class Attendance extends Model
         'lecture_id',
         'marked_at',
     ];
+
+
+    public function lecture()
+    {
+        return $this->belongsTo(Lecture::class);
+    }
 }
 

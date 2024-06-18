@@ -16,7 +16,7 @@ class LecturerController extends Controller
 
 
     public function codeGenerate(){
-        // $lectures = Lecture::all();
+
         $lecturer = Auth::user()->lecturer;
         $lectures = $lecturer->lectures;
         return view('lecturer.lecturer-code-generate', compact('lectures'));
@@ -30,7 +30,6 @@ class LecturerController extends Controller
     ]);
 
     $lecture = Lecture::findOrFail($request->course_id);
-
     $oneTimeCode = $lecture->code . Str::random(4);
     $expiration = now()->addSeconds(30);
 
@@ -43,6 +42,14 @@ class LecturerController extends Controller
         'expiration' => $expiration->timestamp,
     ]);
 }
+
+
+public function attendanceSummary($lectureId)
+    {
+        $lecture = Lecture::find($lectureId);
+    $attendanceCount = $lecture->attendances()->count();
+    return response()->json(['attendanceCount' => $attendanceCount]);
+    }
 
     // public function otcGenerate(Request $request){
 

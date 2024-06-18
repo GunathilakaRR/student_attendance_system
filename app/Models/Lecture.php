@@ -31,9 +31,9 @@ class Lecture extends Model
         return $this->belongsToMany(Student::class,'lecture_student');
     }
 
-    // public function attendances()
-    // {
-    //     return $this->hasMany(Attendance::class);
-    // }
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
 
 }

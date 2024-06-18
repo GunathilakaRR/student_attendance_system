@@ -38,6 +38,8 @@ Route::post('register_store', [StudentController::class, 'Register'])->name('reg
 
 Route::get('code-generate', [LecturerController::class, 'codeGenerate'])->name('code-generate');
 Route::post('otc-generate', [LecturerController::class, 'otcGenerate'])->name('otc-generate');
+Route::get('/lectures/{lecture}/attendance-summary', [LecturerController::class, 'attendanceSummary'])->name('lectures.attendance-summary');
+
 Route::get('lecturerProfile_update/{id}', [LecturerController::class, 'LecturerProfileUpdate'])->name('lecturerProfile_update');
 Route::post('update-profile/{id}', [LecturerController::class, 'UpdateProfile'])->name('update-profile');
 Route::get('view_assigned_lectures/{id}', [LecturerController::class, 'ViewAssignedlectures'])->name('view_assigned_lectures');

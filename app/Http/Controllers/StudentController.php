@@ -26,39 +26,36 @@ class StudentController extends Controller
 
     public function AttendanceMark(Request $request)
     {
-        //dd($request);
         $request->validate([
             'one_time_code' => 'required|string',
         ]);
 
+        // Retrieve lecture ID from the cache
         $lectureId = Cache::get($request->one_time_code);
 
         if (!$lectureId) {
             return redirect()->back()->withErrors(['error' => 'Invalid or expired one-time code.']);
         }
 
-        // Get the currently logged-in student
-        $studentId = Auth::user()->student->id;
+        // Assuming you have a way to get the currently logged-in student
+        $studentId = auth()->user()->student->id;
 
-        // Check if attendance has already been marked
-        $existingAttendance = Attendance::where('student_id', $studentId)
-            ->where('lecture_id', $lectureId)
-            ->first();
+        // Check if the student has already marked attendance for this lecture
+        $attendanceExists = Attendance::where('student_id', $studentId)
+                                      ->where('lecture_id', $lectureId)
+                                      ->exists();
 
-        if ($existingAttendance) {
-            return redirect()->back()->withErrors(['error' => 'Attendance already marked.']);
+        if ($attendanceExists) {
+            return redirect()->back()->withErrors(['error' => 'You have already marked your attendance for this lecture.']);
         }
 
-        // Mark attendance for the student
         Attendance::create([
             'student_id' => $studentId,
             'lecture_id' => $lectureId,
             'marked_at' => now(),
         ]);
-
-        // Remove the one-time code from cache after usage
-        Cache::forget($request->one_time_code);
-
+        // Do not forget the one-time code so other students can use it
+        // Cache::forget($request->one_time_code); // Comment this line out or remove it
         return redirect()->back()->with('success', 'Attendance marked successfully.');
     }
 
