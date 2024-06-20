@@ -85,7 +85,7 @@
                     <div id="attendance-summary" style="flex-grow: 1;">
                         <!-- Attendance summary will be updated here -->
                     </div>
-                    <button class="btn" style="background-color: green; color: #fff; margin-left: 20px;">Download Summary</button>
+                    <a href="{{ route('lectures.download-summary', $lecture->id) }}" class="btn" style="background-color: green; color: #ffff;">Download Summary</a>
                 </div>
             </div>
 

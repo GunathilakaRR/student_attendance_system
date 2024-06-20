@@ -9,6 +9,7 @@ use App\Models\Lecture;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Response;
 
 
 class LecturerController extends Controller
@@ -116,6 +117,26 @@ public function attendanceSummary($lectureId)
 
 
 
+
+    public function downloadSummary($lectureId)
+    {
+        $lecture = Lecture::findOrFail($lectureId);
+        $attendances = $lecture->attendances;
+
+        $content = "Attendance Summary for " . $lecture->title . "\n\n";
+        $content .= "Student Registration Number\tDate and Time\n";
+
+        foreach ($attendances as $attendance) {
+            $content .= $attendance->student->registration_number . "\t" . $attendance->created_at . "\n";
+        }
+
+        $fileName = 'attendance-summary-' . $lecture->id . '.txt';
+
+        return Response::make($content, 200, [
+            'Content-Type' => 'text/plain',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
+        ]);
+    }
 
 
 
