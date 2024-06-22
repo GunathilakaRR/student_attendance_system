@@ -13,9 +13,9 @@
         color: #fff;
         width: 250px;
         padding-left: 20px;
-        height: 100vh;
         background-color: #594f8d;
         border-top-right-radius: 80px;
+        overflow-y: auto;
     }
 
     aside a {

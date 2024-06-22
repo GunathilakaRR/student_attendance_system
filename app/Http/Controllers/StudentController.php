@@ -19,7 +19,11 @@ class StudentController extends Controller
     }
 
     public function StudentAttendance(){
-        return view('student.student-attendance');
+        $studentId = auth()->user()->student->id;
+    $attendances = Attendance::where('student_id', $studentId)->get();
+
+    return view('student.student-attendance', compact('attendances'));
+        // return view('student.student-attendance');
     }
 
 
@@ -54,8 +58,7 @@ class StudentController extends Controller
             'lecture_id' => $lectureId,
             'marked_at' => now(),
         ]);
-        // Do not forget the one-time code so other students can use it
-        // Cache::forget($request->one_time_code); // Comment this line out or remove it
+
         return redirect()->back()->with('success', 'Attendance marked successfully.');
     }
 

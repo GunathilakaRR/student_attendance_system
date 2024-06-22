@@ -14,6 +14,9 @@ class Attendance extends Model
         'marked_at',
     ];
 
+    protected $casts = [
+        'marked_at' => 'datetime',
+    ];
 
     public function lecture()
     {
