@@ -21,11 +21,10 @@
   box-sizing: border-box;
   list-style: none;
   text-decoration: none;
-  font-family: 'Josefin Sans', sans-serif;
 }
 
 body{
-   background-color: #f3f5f9;
+   background-color: #41609d;
 }
 
 .wrapper{
@@ -123,24 +122,6 @@ body{
 
 
     <div class="wrapper">
-        <div class="sidebar">
-            <h2>{{ Auth::user()->name1 }}</h2>
-            <h2>{{ Auth::user()->registration_number }}</h2>
-            <ul>
-                <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
-                <li><a href="#"><i class="fas fa-user"></i>Profile</a></li>
-                <li><a href="#"><i class="fas fa-address-card"></i>About</a></li>
-                <li><a href="{{ route('student-cvbuilder') }}"><i class="fas fa-project-diagram"></i>CV Builder</a></li>
-                <li><a href="#"><i class="fas fa-blog"></i>Blogs</a></li>
-                <li><a href="#"><i class="fas fa-address-book"></i>Contact</a></li>
-                <li><a href="#"><i class="fas fa-map-pin"></i>Map</a></li>
-            </ul>
-            <div class="social_media">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
         <div class="main_content">
             <div class="header">Lets build your CV </div>
             <div class="container">
@@ -675,8 +656,6 @@ body{
 
 
 </html>
-
-
             `;
 
             // Open CV in new tab
@@ -685,13 +664,7 @@ body{
             cvWindow.document.write(cvContent);
             cvWindow.document.close();
 
-
-
         }
-
-
-
-
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 

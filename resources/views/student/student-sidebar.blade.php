@@ -5,16 +5,17 @@
 
 <style>
 
-    /* Sidebar CSS */
-    body{
+body {
         margin: 0;
     }
     aside {
         color: #fff;
         width: 250px;
         padding-left: 20px;
+        min-height: 100vh;
         background-color: #594f8d;
         border-top-right-radius: 80px;
+        /* Add overflow-y: auto; to enable scrolling if content overflows */
         overflow-y: auto;
     }
 
@@ -65,9 +66,17 @@
         border-top-right-radius: 18px;
         box-shadow: 0 -20px 0 0 #fff;
     }
-    h2 ,h3{
+
+    h2, h3 {
         font-size: 19px;
     }
+
+    /* Ensure full height sidebar */
+    html, body, .container {
+        height: 100%;
+    }
+
+    /* Ensure full height sidebar */
 
 
 </style>
@@ -98,7 +107,7 @@
         <a href="#">
             <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> MARKS
         </a>
-        <a href="#">
+        <a href="{{ route('student-cvbuilder') }}">
             <i class="fa fa-clone" aria-hidden="true"></i> CV BUILDER
         </a>
         <a href="{{ route('studentProfile_update', Auth::user()->student->id) }}">

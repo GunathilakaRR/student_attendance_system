@@ -8,6 +8,7 @@
     aside {
         color: #fff;
         width: 250px;
+        min-height: 100vh;
         padding-left: 20px;
         background-color: green;
         border-top-right-radius: 80px;
