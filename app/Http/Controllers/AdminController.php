@@ -9,6 +9,8 @@ use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Notifications\LecturerAssignedNotification;
+use App\Imports\MarkImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -131,8 +133,32 @@ class AdminController extends Controller
     }
 
 
-    public function selectYear(){
 
+    public function AddMarks(){
+        return view('admin.admin-addMarks');
     }
 
+
+    public function ImportMarks(Request $request){
+
+        //dd($request);
+
+        $request->validate([
+            'import_file' => 'required|file|mimes:xls,xlsx'
+        ]);
+
+        Excel::import(new MarkImport, $request->file('import_file'));
+        return redirect()->back()->with('status', 'File Uploaded Successfully.');
+    }
+
+
 }
+
+
+
+
+//     public function selectYear(){
+
+//     }
+
+// }

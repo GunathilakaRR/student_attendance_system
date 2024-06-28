@@ -15,10 +15,8 @@
 
         .home-section {
             flex: 1;
-            padding: 20px; /* Adjust padding as needed */
+            padding: 20px; 
         }
-
-        /* Adjust the styles for the sidebar as needed */
         aside {
             /* Your existing sidebar styles */
         }
@@ -36,27 +34,10 @@
             </div>
 
 
-
-
             <div class="row">
                 <div class="col-md-10">
                     <div class="mt-5">
                         <h2>Time Table</h2>
-
-
-                        {{-- @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-                        @if (session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
-                        @endif --}}
-
-
-
                         <table class="table table-bordered">
                             <thead>
                                 <tr>

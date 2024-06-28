@@ -92,7 +92,7 @@
     <a href="{{ route('view-lectures') }}">
         <i class="fa fa-clone" aria-hidden="true"></i> VIEW LECTURES
     </a>
-    <a href="#">
+    <a href="{{ route('add-marks') }}">
         <i class="fa fa-clone" aria-hidden="true"></i> VIEW MARKS
     </a>
     <!-- Add other sidebar links as needed -->

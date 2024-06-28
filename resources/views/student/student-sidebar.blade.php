@@ -104,7 +104,7 @@ body {
         <a href="{{ route("student-attendance") }}">
             <i class="fa-solid fa-file" aria-hidden="true"></i> ATTENDANCE
         </a>
-        <a href="#">
+        <a href="{{ url('students/' . urlencode(Auth::user()->student->registration_number) . '/marks') }}">
             <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> MARKS
         </a>
         <a href="{{ route('student-cvbuilder') }}">

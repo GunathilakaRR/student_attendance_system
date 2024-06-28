@@ -34,6 +34,9 @@ Route::get('studentProfile_update/{id}', [StudentController::class, 'StudentProf
 Route::post('student_profile_update/{id}', [StudentController::class, 'Student_Profile_Update'])->name('student_profile_update');
 Route::get('register_for_courses', [StudentController::class, 'RegisterForCourses'])->name('register_for_courses');
 Route::post('register_store', [StudentController::class, 'Register'])->name('register.store');
+Route::get('/students/{registration_number}/marks', [StudentController::class, 'ShowMarks'])
+    ->where('registration_number', '[A-Za-z0-9\-\_\/]+')
+    ->name('students.marks');
 
 
 Route::get('code-generate', [LecturerController::class, 'codeGenerate'])->name('code-generate');
@@ -58,4 +61,6 @@ Route::get('assign-lecturer/{id}', [AdminController::class, 'ShowAssignForm'])->
 Route::post('assign-lecturer', [AdminController::class, 'AssignLecturer'])->name('assign-lecturer');
 Route::get('view-lecture-info-/{code}', [AdminController::class, 'ViewLectureInfo'])->name('view-lecture-info-');
 Route::get('delete-lecture/{id}', [AdminController::class, 'DeleteLecture'])->name('delete-lecture');
+Route::get('add-marks', [AdminController::class, 'AddMarks'])->name('add-marks');
+Route::post('add-marks', [AdminController::class, 'ImportMarks'])->name('add-marks');
 

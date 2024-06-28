@@ -8,6 +8,7 @@ use App\Models\Student;
 use App\Models\Lecture;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Marks;
 
 class StudentController extends Controller
 {
@@ -146,6 +147,44 @@ class StudentController extends Controller
         return redirect()->back()->with('success', 'Registration successful.');
     }
 
+
+    public function ShowMarks($registration_number){
+
+        $registration_number = urldecode($registration_number);
+        $student = Student::where('registration_number', $registration_number)->first();
+        if (!$student) {
+            return redirect()->back()->with('error', 'Student not found');
+        }
+        $marks = Marks::where('registration_number', $registration_number)->first();
+
+        if ($marks) {
+            $grades = [
+                'subject1_grade' => $this->determineGrade($marks->subject1_marks),
+                'subject2_grade' => $this->determineGrade($marks->subject2_marks),
+                'subject3_grade' => $this->determineGrade($marks->subject3_marks),
+                'subject4_grade' => $this->determineGrade($marks->subject4_marks),
+                'subject5_grade' => $this->determineGrade($marks->subject5_marks),
+            ];
+        } else {
+            $grades = null;
+        }
+
+        return view('student.student-marks', compact('student', 'marks','grades'));
+
+    }
+
+    private function determineGrade($marks)
+    {
+        if ($marks < 50) {
+            return 'F';
+        } elseif ($marks <= 60) {
+            return 'C';
+        } elseif ($marks <= 70) {
+            return 'B';
+        } else {
+            return 'A';
+        }
+    }
 
     // public function UpdateProfile(Request $request, $id){
 
