@@ -41,7 +41,7 @@
 
 
                     <div class="container">
-                        <h2 style="text-transform: uppercase; font-size: 50px;">{{ $student->name }}'s Marks</h2>
+                        <h2 style="text-transform: capitalize; font-size: 50px;">{{ $student->name1 }}'s Marks</h2>
 
                         @if ($marks)
                             <table class="table">

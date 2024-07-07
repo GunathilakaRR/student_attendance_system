@@ -48,8 +48,15 @@ class LecturerController extends Controller
 public function attendanceSummary($lectureId)
     {
         $lecture = Lecture::find($lectureId);
-    $attendanceCount = $lecture->attendances()->count();
+    $currentDate = now()->format('Y-m-d');
+    $attendanceCount = $lecture->attendances()
+        ->whereDate('created_at', $currentDate)
+        ->count();
     return response()->json(['attendanceCount' => $attendanceCount]);
+    
+    //     $lecture = Lecture::find($lectureId);
+    // $attendanceCount = $lecture->attendances()->count();
+    // return response()->json(['attendanceCount' => $attendanceCount]);
     }
 
     // public function otcGenerate(Request $request){

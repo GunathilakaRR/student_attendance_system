@@ -67,7 +67,7 @@
                 </form>
 
 
-                <div class="mt-5">
+                <div class="mt-5 mb-5" >
                     <div class="container">
                         <h1> Attendance Summary</h1>
                         <div id="calendar"></div>

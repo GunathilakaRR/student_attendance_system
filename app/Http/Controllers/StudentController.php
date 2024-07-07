@@ -36,37 +36,30 @@ class StudentController extends Controller
         $request->validate([
             'one_time_code' => 'required|string',
         ]);
-
         // Retrieve lecture ID from the cache
         $lectureId = Cache::get($request->one_time_code);
-
         if (!$lectureId) {
             return redirect()->back()->withErrors(['error' => 'Invalid or expired one-time code.']);
         }
-
         // Assuming you have a way to get the currently logged-in student
         $studentId = auth()->user()->student->id;
-
         // Check if the student has already marked attendance for this lecture
         $attendanceExists = Attendance::where('student_id', $studentId)
                                       ->where('lecture_id', $lectureId)
                                       ->exists();
-
         if ($attendanceExists) {
             return redirect()->back()->withErrors(['error' => 'You have already marked your attendance for this lecture.']);
         }
-
         Attendance::create([
             'student_id' => $studentId,
             'lecture_id' => $lectureId,
             'marked_at' => now(),
         ]);
-
         return redirect()->back()->with('success', 'Attendance marked successfully.');
     }
 
 
-
+    
     public function StudentProfileUpdate( $id){
         $students = Student::find($id);
     return view('student.student-update', compact('students'));
@@ -119,7 +112,7 @@ class StudentController extends Controller
 
 
 
-    
+
     public function ShowMarks($registration_number, YouTubeService $youTubeService)
     {
         $registration_number = urldecode($registration_number);

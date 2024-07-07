@@ -15,7 +15,7 @@
 
         .home-section {
             flex: 1;
-            padding: 20px; 
+            padding: 20px;
         }
         aside {
             /* Your existing sidebar styles */
@@ -35,7 +35,7 @@
 
 
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-9">
                     <div class="mt-5">
                         <h2>Time Table</h2>
                         <table class="table table-bordered">
@@ -68,43 +68,13 @@
                                 @endforelse
                             </tbody>
                         </table>
-
-
-                        {{-- <table class="table table-bordered" style="width: 100%; border-collapse: collapse; margin-top: 20px; border: 1px solid #dee2e6;">
-                            <thead>
-                                <tr style="background-color: #f8f9fa;">
-                                    <th style="border: 1px solid #dee2e6; padding: 8px;">Time</th>
-                                    @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
-                                        <th style="border: 1px solid #dee2e6; padding: 8px;">{{ $day }}</th>
-                                    @endforeach
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for ($hour = 8; $hour <= 18; $hour++)
-                                    <tr>
-                                        <td style="border: 1px solid #dee2e6; padding: 8px;">{{ $hour }}:00 - {{ $hour + 1 }}:00</td>
-                                        @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
-                                            <td style="border: 1px solid #dee2e6; padding: 8px;">
-                                                @foreach ($lectures as $lecture)
-                                                    @foreach ($lecture->schedules as $schedule)
-                                                        @if ($schedule->day == $day && date('H', strtotime($schedule->start_time)) <= $hour && date('H', strtotime($schedule->end_time)) > $hour)
-                                                            <div style="padding: 5px; background-color: #e9ecef; margin-bottom: 5px; border-radius: 4px;">
-                                                                <strong>{{ $lecture->title }}</strong><br>
-                                                                {{ date('H:i', strtotime($schedule->start_time)) }} - {{ date('H:i', strtotime($schedule->end_time)) }}
-                                                            </div>
-                                                        @endif
-                                                    @endforeach
-                                                @endforeach
-                                            </td>
-                                        @endforeach
-                                    </tr>
-                                @endfor
-                            </tbody>
-                        </table> --}}
-
-
-
                     </div>
+                </div>
+
+                <div class="col-md-3">
+                    <h2 class="mt-5">
+                        <h2>Attendance Report</h2>
+                    </h2>
                 </div>
             </div>
 
