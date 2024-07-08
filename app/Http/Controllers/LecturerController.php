@@ -46,18 +46,42 @@ class LecturerController extends Controller
 
 
 public function attendanceSummary($lectureId)
-    {
-        $lecture = Lecture::find($lectureId);
+{
+    $lecture = Lecture::find($lectureId);
     $currentDate = now()->format('Y-m-d');
-    $attendanceCount = $lecture->attendances()
+
+    // Fetch the list of students who marked attendance
+    $attendances = $lecture->attendances()
         ->whereDate('created_at', $currentDate)
-        ->count();
-    return response()->json(['attendanceCount' => $attendanceCount]);
-    
-    //     $lecture = Lecture::find($lectureId);
-    // $attendanceCount = $lecture->attendances()->count();
-    // return response()->json(['attendanceCount' => $attendanceCount]);
-    }
+        ->get();
+
+    // Extract student names
+    $students = $attendances->map(function($attendance) {
+        return [
+            'name' => $attendance->student->name1,
+            'registration_number' => $attendance->student->registration_number,
+        ];
+    });
+
+    $attendanceCount = $attendances->count();
+
+    return response()->json([
+        'attendanceCount' => $attendanceCount,
+        'students' => $students,
+    ]);
+}
+
+// public function attendanceSummary($lectureId)
+//     {
+//         $lecture = Lecture::find($lectureId);
+//     $currentDate = now()->format('Y-m-d');
+//     $attendanceCount = $lecture->attendances()
+//         ->whereDate('created_at', $currentDate)
+//         ->count();
+//     return response()->json(['attendanceCount' => $attendanceCount]);
+
+
+//     }
 
     // public function otcGenerate(Request $request){
 

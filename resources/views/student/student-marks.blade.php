@@ -41,7 +41,7 @@
 
 
                     <div class="container">
-                        <h2 style="text-transform: capitalize; font-size: 50px;">{{ $student->name1 }}'s Marks</h2>
+                        <h2 style="text-transform: capitalize; font-size: 25px;">{{ $student->name1 }}'s Marks</h2>
 
                         @if ($marks)
                             <table class="table">
@@ -108,7 +108,7 @@
                                 </div>
                             @endif
                         @else
-                            <p>No marks found for this student.</p>
+                            <p>No marks found for you.</p>
                         @endif
                     </div>
 

@@ -32,34 +32,41 @@ class StudentController extends Controller
 
 
     public function AttendanceMark(Request $request)
-    {
-        $request->validate([
-            'one_time_code' => 'required|string',
-        ]);
-        // Retrieve lecture ID from the cache
-        $lectureId = Cache::get($request->one_time_code);
-        if (!$lectureId) {
-            return redirect()->back()->withErrors(['error' => 'Invalid or expired one-time code.']);
-        }
-        // Assuming you have a way to get the currently logged-in student
-        $studentId = auth()->user()->student->id;
-        // Check if the student has already marked attendance for this lecture
-        $attendanceExists = Attendance::where('student_id', $studentId)
-                                      ->where('lecture_id', $lectureId)
-                                      ->exists();
-        if ($attendanceExists) {
-            return redirect()->back()->withErrors(['error' => 'You have already marked your attendance for this lecture.']);
-        }
-        Attendance::create([
-            'student_id' => $studentId,
-            'lecture_id' => $lectureId,
-            'marked_at' => now(),
-        ]);
-        return redirect()->back()->with('success', 'Attendance marked successfully.');
+{
+    $request->validate([
+        'one_time_code' => 'required|string',
+    ]);
+
+    // Retrieve lecture ID from the cache
+    $lectureId = Cache::get($request->one_time_code);
+    if (!$lectureId) {
+        return redirect()->back()->withErrors(['error' => 'Invalid or expired one-time code.']);
     }
 
+    // Assuming you have a way to get the currently logged-in student
+    $studentId = auth()->user()->student->id;
 
-    
+    // Check if the student has already marked attendance for this lecture today
+    $currentDate = now()->format('Y-m-d');
+    $attendanceExists = Attendance::where('student_id', $studentId)
+                                  ->where('lecture_id', $lectureId)
+                                  ->whereDate('marked_at', $currentDate)
+                                  ->exists();
+    if ($attendanceExists) {
+        return redirect()->back()->withErrors(['error' => 'You have already marked your attendance for this lecture today.']);
+    }
+
+    Attendance::create([
+        'student_id' => $studentId,
+        'lecture_id' => $lectureId,
+        'marked_at' => now(),
+    ]);
+
+    return redirect()->back()->with('success', 'Attendance marked successfully.');
+}
+
+
+
     public function StudentProfileUpdate( $id){
         $students = Student::find($id);
     return view('student.student-update', compact('students'));
@@ -89,11 +96,15 @@ class StudentController extends Controller
     }
 
 
+
+
     public function RegisterForCourses(){
         $lectures = Lecture::all();
         // $students = Student::all();
         return view('student.student-registerCourses', compact('lectures'));
     }
+
+
 
 
     public function Register(Request $request){
@@ -138,21 +149,21 @@ class StudentController extends Controller
             $feedback = $this->generateFeedback($marks);
 
             // Fetch playlists for subjects with low marks
-            if ($marks->subject1_marks <= 40) {
-                $playlists['subject1'] = $youTubeService->getPlaylists('Python');
-            }
-            if ($marks->subject2_marks <= 40) {
-                $playlists['subject2'] = $youTubeService->getPlaylists('Mathematics');
-            }
-            if ($marks->subject3_marks <= 40) {
-                $playlists['subject3'] = $youTubeService->getPlaylists('Physics');
-            }
-            if ($marks->subject4_marks <= 40) {
-                $playlists['subject4'] = $youTubeService->getPlaylists('Chemistry');
-            }
-            if ($marks->subject5_marks <= 40) {
-                $playlists['subject5'] = $youTubeService->getPlaylists('Biology');
-            }
+            // if ($marks->subject1_marks <= 40) {
+            //     $playlists['subject1'] = $youTubeService->getPlaylists('Python');
+            // }
+            // if ($marks->subject2_marks <= 40) {
+            //     $playlists['subject2'] = $youTubeService->getPlaylists('Mathematics');
+            // }
+            // if ($marks->subject3_marks <= 40) {
+            //     $playlists['subject3'] = $youTubeService->getPlaylists('Physics');
+            // }
+            // if ($marks->subject4_marks <= 40) {
+            //     $playlists['subject4'] = $youTubeService->getPlaylists('Chemistry');
+            // }
+            // if ($marks->subject5_marks <= 40) {
+            //     $playlists['subject5'] = $youTubeService->getPlaylists('Biology');
+            // }
         }
 
         return view('student.student-marks', compact('student', 'marks', 'grades', 'feedback', 'playlists'));
