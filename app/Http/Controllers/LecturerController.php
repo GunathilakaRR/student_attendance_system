@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\Lecturer;
 use App\Models\Lecture;
 use App\Models\User;
+use App\Models\Attendance;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\DB;
 
 
 class LecturerController extends Controller
@@ -147,6 +149,31 @@ public function attendanceSummary($lectureId)
     }
 
 
+    public function attendanceTrends($id)
+    {
+        $lectures = DB::table('lectures')
+        ->join('lecture_lecturer', 'lectures.id', '=', 'lecture_lecturer.lecture_id')
+        ->where('lecture_lecturer.lecturer_id', $id)
+        ->select('lectures.id', 'lectures.title')
+        ->get();
+
+    $lectureData = [];
+
+    foreach ($lectures as $lecture) {
+        $attendanceRecords = Attendance::select('marked_at as date', 'attendance_count')
+                                       ->where('lecture_id', $lecture->id)
+                                       ->orderBy('marked_at', 'asc')
+                                       ->get();
+
+        $lectureData[] = [
+            'lectureName' => $lecture->lecture_name,
+            'dates' => $attendanceRecords->pluck('date')->toArray(),
+            'attendanceCounts' => $attendanceRecords->pluck('attendance_count')->toArray(),
+        ];
+    }
+
+    return view('dashboard.attendance', ['lectureData' => $lectureData]);
+    }
 
 
     public function downloadSummary($lectureId)

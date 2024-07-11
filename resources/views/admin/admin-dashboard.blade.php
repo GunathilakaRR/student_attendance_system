@@ -10,7 +10,11 @@
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         .container1 {
@@ -25,10 +29,10 @@
         .card {
             transition: transform 0.3s;
         }
+
         .card:hover {
             transform: translateY(-5px);
         }
-
     </style>
 
     <div class="container1">
@@ -37,7 +41,6 @@
         <div class="home-section">
             <div class="container-fluid mt-4">
                 <div class="row">
-
                     <div class="col-xl-3 col-md-6 mb-4">
                         <div class="card border-left-primary shadow h-100 py-2">
                             <div class="card-body">
@@ -109,15 +112,108 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+
+
+                        <!-- Canvas element for the bar chart -->
+                        <canvas class="mt-5" id="averageMarksChart"></canvas>
+
+                        <!-- Your existing dashboard content -->
+                        <div>
+                            <p style="font-size: 20px;">No. of Students: {{ $studentCount }}</p>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div>
+                            <p>Students: {{ $studentCount }}</p>
+                            <p>Lecturers: {{ $lecturerCount }}</p>
+                        </div>
+
+                        <!-- Canvas element for the bar chart -->
+                        <canvas id="attendanceBarChart"></canvas>
+
+                        <script>
+                            // Prepare data for the bar chart
+                            const attendanceCounts = @json($attendanceCounts);
+                            const lectureLabels = Object.keys(attendanceCounts).map(lectureId => `Subject ${lectureId}`);
+                            const lectureData = Object.values(attendanceCounts);
+
+                            // Create the bar chart
+                            const ctxBar = document.getElementById('attendanceBarChart').getContext('2d');
+                            const attendanceBarChart = new Chart(ctxBar, {
+                                type: 'bar',
+                                data: {
+                                    labels: lectureLabels,
+                                    datasets: [{
+                                        label: 'Number of Students Attending',
+                                        data: lectureData,
+                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                        borderColor: 'rgba(75, 192, 192, 1)',
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true,
+                                            precision: 0
+                                        }
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
+
+
+
             </div>
-
-
         </div>
     </div>
 
 
 
+
+
+
+    <script>
+        // Prepare data for the chart
+        const averageMarks = @json($averageMarks);
+        const labels = ['Subject 1', 'Subject 2', 'Subject 3', 'Subject 4', 'Subject 5'];
+        const data = [
+            averageMarks.subject1_avg,
+            averageMarks.subject2_avg,
+            averageMarks.subject3_avg,
+            averageMarks.subject4_avg,
+            averageMarks.subject5_avg
+        ];
+
+        // Create the bar chart
+        const ctx = document.getElementById('averageMarksChart').getContext('2d');
+        const averageMarksChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Average Marks',
+                    data: data,
+                    backgroundColor: 'rgba(232, 68, 36, 0.2)',
+                    borderColor: 'rgba(232, 68, 36, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
 </x-app-layout>
-
-
-

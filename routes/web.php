@@ -46,6 +46,7 @@ Route::get('/lectures/{lecture}/download-summary', [LecturerController::class, '
 Route::get('lecturerProfile_update/{id}', [LecturerController::class, 'LecturerProfileUpdate'])->name('lecturerProfile_update');
 Route::post('update-profile/{id}', [LecturerController::class, 'UpdateProfile'])->name('update-profile');
 Route::get('view_assigned_lectures/{id}', [LecturerController::class, 'ViewAssignedlectures'])->name('view_assigned_lectures');
+Route::get('dashboard_attendance/{id}', [LecturerController::class, 'attendanceTrends'])->name('dashboard_attendance');
 
 
 
