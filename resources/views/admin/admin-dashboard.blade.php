@@ -113,60 +113,30 @@
                     </div>
                 </div>
 
+
+
+
                 <div class="row">
-                    <div class="col-md-6">
-
-
+                    <div class="col-md-6 card1 border-left-warning shadow  py-5 mr-5" >
                         <!-- Canvas element for the bar chart -->
-                        <canvas class="mt-5" id="averageMarksChart"></canvas>
-
+                        <h3 >Exam Performance</h3>
+                        <canvas  id="averageMarksChart"></canvas>
                         <!-- Your existing dashboard content -->
                         <div>
                             <p style="font-size: 20px;">No. of Students: {{ $studentCount }}</p>
-
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-5 card1 border-left-warning shadow  py-5 ">
+                        <!-- Canvas element for the bar chart -->
+                        <h3 >Attendance Performance</h3>
+                        <canvas class="mt-5" id="attendanceBarChart"></canvas>
                         <div>
                             <p>Students: {{ $studentCount }}</p>
                             <p>Lecturers: {{ $lecturerCount }}</p>
                         </div>
-
-                        <!-- Canvas element for the bar chart -->
-                        <canvas id="attendanceBarChart"></canvas>
-
-                        <script>
-                            // Prepare data for the bar chart
-                            const attendanceCounts = @json($attendanceCounts);
-                            const lectureLabels = Object.keys(attendanceCounts).map(lectureId => `Subject ${lectureId}`);
-                            const lectureData = Object.values(attendanceCounts);
-
-                            // Create the bar chart
-                            const ctxBar = document.getElementById('attendanceBarChart').getContext('2d');
-                            const attendanceBarChart = new Chart(ctxBar, {
-                                type: 'bar',
-                                data: {
-                                    labels: lectureLabels,
-                                    datasets: [{
-                                        label: 'Number of Students Attending',
-                                        data: lectureData,
-                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                        borderColor: 'rgba(75, 192, 192, 1)',
-                                        borderWidth: 1
-                                    }]
-                                },
-                                options: {
-                                    scales: {
-                                        y: {
-                                            beginAtZero: true,
-                                            precision: 0
-                                        }
-                                    }
-                                }
-                            });
-                        </script>
                     </div>
+
                 </div>
 
 
@@ -179,11 +149,11 @@
 
 
 
-
+    {{-- 1st chart --}}
     <script>
         // Prepare data for the chart
         const averageMarks = @json($averageMarks);
-        const labels = ['Subject 1', 'Subject 2', 'Subject 3', 'Subject 4', 'Subject 5'];
+        const labels = ['Python', 'Java', 'PHP', 'Javascript', 'C++'];
         const data = [
             averageMarks.subject1_avg,
             averageMarks.subject2_avg,
@@ -215,5 +185,39 @@
             }
         });
     </script>
+
+
+    {{-- 2nd chart --}}
+    <script>
+        // Prepare data for the bar chart
+        const attendanceCounts = @json($attendanceCounts);
+        const lectureLabels = Object.keys(attendanceCounts);
+        const lectureData = Object.values(attendanceCounts);
+
+        // Create the bar chart
+        const ctxBar = document.getElementById('attendanceBarChart').getContext('2d');
+        const attendanceBarChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: lectureLabels,
+                datasets: [{
+                    label: 'Number of Students Attending',
+                    data: lectureData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        precision: 0
+                    }
+                }
+            }
+        });
+    </script>
+
 
 </x-app-layout>

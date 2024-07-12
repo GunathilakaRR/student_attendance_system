@@ -38,18 +38,21 @@ class HomeController extends Controller
             // Convert the result to an array for easy manipulation in the view
             $averageMarks = (array) $averageMarks;
 
-            // Fetch attendance data
-            $attendanceData = Attendance::select('lecture_id', DB::raw('COUNT(student_id) as attendance_count'))
-            ->groupBy('lecture_id')
-            ->get();
+            // Fetch attendance data along with lecture names
+            $attendanceData = DB::table('attendances')
+                ->join('lectures', 'attendances.lecture_id', '=', 'lectures.id')
+                ->select('lectures.title as lecture_name', DB::raw('COUNT(attendances.student_id) as attendance_count'))
+                ->groupBy('lectures.title')
+                ->get();
 
             // Prepare attendance data for the view
             $attendanceCounts = [];
             foreach ($attendanceData as $data) {
-                $attendanceCounts[$data->lecture_id] = $data->attendance_count;
+                $attendanceCounts[$data->lecture_name] = $data->attendance_count;
             }
 
             return view('admin.admin-dashboard', compact('studentCount', 'lecturerCount', 'averageMarks', 'attendanceCounts'));
+
 
         }elseif($role == '2'){
 
