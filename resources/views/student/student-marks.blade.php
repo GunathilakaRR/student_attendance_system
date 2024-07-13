@@ -54,27 +54,27 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Subject 1</td>
+                                        <td>Python</td>
                                         <td>{{ $marks->subject1_marks }}</td>
                                         <td>{{ $grades['subject1_grade'] }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Subject 2</td>
+                                        <td>Java</td>
                                         <td>{{ $marks->subject2_marks }}</td>
                                         <td>{{ $grades['subject2_grade'] }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Subject 3</td>
+                                        <td>PHP</td>
                                         <td>{{ $marks->subject3_marks }}</td>
                                         <td>{{ $grades['subject3_grade'] }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Subject 4</td>
+                                        <td>Javascript</td>
                                         <td>{{ $marks->subject4_marks }}</td>
                                         <td>{{ $grades['subject4_grade'] }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Subject 5</td>
+                                        <td>C++</td>
                                         <td>{{ $marks->subject5_marks }}</td>
                                         <td>{{ $grades['subject5_grade'] }}</td>
                                     </tr>
@@ -82,13 +82,43 @@
                             </table>
 
                             @if (!empty($feedback))
-                                <div class="feedback">
+                                <div class="feedback mt-5">
                                     <h3>Feedback for Low Marks</h3>
                                     <ul>
-                                        @foreach ($feedback as $subject => $message)
-                                            <li>{{ $message }}</li>
+                                        @foreach($feedback as $subject => $message)
+                                            <li>
+                                                <strong>Hello there! <i class='fas fa-wave'></i></strong>
+                                                {!! nl2br(e($message)) !!} <!-- Converts newlines to <br> -->
+
+                                                @if(isset($videos[$subject]))
+                                                    <h3 class="mt-5">Recommended Videos:</h3>
+                                                    <div class="row">
+                                                        @foreach($videos[$subject] as $video)
+                                                            <div class="col-md-2">
+                                                                <div class="card mb-3">
+                                                                    <a href="{{ $video['url'] }}" target="_blank" style="text-decoration: none;">
+                                                                        <img src="{{ $video['thumbnail'] }}" class="card-img-top" alt="{{ $subject }} video">
+                                                                        <div class="card-body">
+                                                                            <h5 style="font-size: 13px; " class="card-title">{{ $video['title'] }}</h5>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                @endif
+                                            </li>
                                         @endforeach
                                     </ul>
+                                    {{-- <ul>
+                                        @foreach ($feedback as $subject => $message)
+
+                                            <li>
+                                                Hello there!  <i class="fa-solid fa-hand fa-flip-horizontal fa-xl" style="color: #594f8d;"></i>
+                                                {!! nl2br(e($message)) !!}
+                                            </li>
+                                        @endforeach
+                                    </ul> --}}
                                 </div>
                             @endif
 

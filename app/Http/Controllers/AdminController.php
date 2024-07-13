@@ -148,7 +148,7 @@ class AdminController extends Controller
         ]);
 
         Excel::import(new MarkImport, $request->file('import_file'));
-        return redirect()->back()->with('status', 'File Uploaded Successfully.');
+        return redirect()->back()->with('success', 'File Uploaded Successfully.');
     }
 
 

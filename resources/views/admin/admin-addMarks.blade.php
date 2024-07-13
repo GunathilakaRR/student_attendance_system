@@ -36,14 +36,13 @@
                 @include('admin.admin-sidebar')
 
                 <div class="home-section">
-
-
                     <div class="container">
 
                         @if (session('success'))
-                            <p>{{ session('success') }}</p>
+                            <div class="alert alert-success" role="alert">
+                                <p>{{ session('success') }}</p>
+                            </div>
                         @endif
-
                         @if ($errors->any())
                             <div>
                                 <ul>
@@ -55,7 +54,7 @@
                         @endif
 
 
-                        <div class="card mt-5">
+                        <div class="card my-5">
                             <div class="card-header">
                                 <h4>Import Exam Marks Excel File</h4>
                             </div>
@@ -73,8 +72,30 @@
                             </div>
                         </div>
 
-                    </div>
 
+
+                        <table class="table my-5">
+                            <thead>
+                              <tr>
+                                <th scope="col">Registratin Number</th>
+                                <th scope="col">Python</th>
+                                <th scope="col">Java</th>
+                                <th scope="col">PHP</th>
+                                <th scope="col">Javascript</th>
+                                <th scope="col">C++</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                    </div>
                 </div>
             </div>
     </body>

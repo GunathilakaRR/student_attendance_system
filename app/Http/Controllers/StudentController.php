@@ -10,7 +10,7 @@ use App\Models\Lecture;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Marks;
-
+use Illuminate\Support\Facades\Http;
 
 class StudentController extends Controller
 {
@@ -123,11 +123,11 @@ class StudentController extends Controller
 
 
 
-
-    public function ShowMarks($registration_number, YouTubeService $youTubeService)
+    public function ShowMarks($registration_number)
     {
         $registration_number = urldecode($registration_number);
         $student = Student::where('registration_number', $registration_number)->first();
+
         if (!$student) {
             return redirect()->back()->with('error', 'Student not found');
         }
@@ -135,7 +135,7 @@ class StudentController extends Controller
         $marks = Marks::where('registration_number', $registration_number)->first();
         $grades = [];
         $feedback = [];
-        $playlists = [];
+        $videos = [];
 
         if ($marks) {
             $grades = [
@@ -146,27 +146,12 @@ class StudentController extends Controller
                 'subject5_grade' => $this->determineGrade($marks->subject5_marks),
             ];
 
-            $feedback = $this->generateFeedback($marks);
-
-            // Fetch playlists for subjects with low marks
-            // if ($marks->subject1_marks <= 40) {
-            //     $playlists['subject1'] = $youTubeService->getPlaylists('Python');
-            // }
-            // if ($marks->subject2_marks <= 40) {
-            //     $playlists['subject2'] = $youTubeService->getPlaylists('Mathematics');
-            // }
-            // if ($marks->subject3_marks <= 40) {
-            //     $playlists['subject3'] = $youTubeService->getPlaylists('Physics');
-            // }
-            // if ($marks->subject4_marks <= 40) {
-            //     $playlists['subject4'] = $youTubeService->getPlaylists('Chemistry');
-            // }
-            // if ($marks->subject5_marks <= 40) {
-            //     $playlists['subject5'] = $youTubeService->getPlaylists('Biology');
-            // }
+            $feedbackData = $this->generateFeedback($marks);
+            $feedback = $feedbackData['feedback'];
+            $videos = $feedbackData['videos'];
         }
 
-        return view('student.student-marks', compact('student', 'marks', 'grades', 'feedback', 'playlists'));
+        return view('student.student-marks', compact('student', 'marks', 'grades', 'feedback', 'videos'));
     }
 
     private function determineGrade($marks)
@@ -185,94 +170,187 @@ class StudentController extends Controller
     private function generateFeedback($marks)
     {
         $feedback = [];
-        if ($marks->subject1_marks <= 40) {
-            $feedback['subject1'] = 'Need to improve in Subject 1';
+        $videos = [];
+        $subjects = [
+            'subject1_marks' => 'Python',
+            'subject2_marks' => 'Java',
+            'subject3_marks' => 'PHP',
+            'subject4_marks' => 'Javascript',
+            'subject5_marks' => 'C++',
+        ];
+
+        foreach ($subjects as $key => $subject) {
+            if ($marks->$key <= 40) {
+                $feedback[$subject] = "\n\nYou've got low marks in $subject.\nDon't worry. Keep practicing, stay motivated, and use the following course materials to boost your skills!";
+                $videos[$subject] = $this->fetchYouTubeVideos($subject); // Call to fetch videos
+            }
         }
-        if ($marks->subject2_marks <= 40) {
-            $feedback['subject2'] = 'Need to improve in Subject 2';
+
+        return ['feedback' => $feedback, 'videos' => $videos];
+    }
+
+    private function fetchYouTubeVideos($subject)
+    {
+        $apiKey = env('YOUTUBE_API_KEY');
+        $query = urlencode($subject . ' tutorial');
+        $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q={$query}&key={$apiKey}&maxResults=5&type=video";
+
+        // Disable SSL verification
+        $response = Http::withOptions(['verify' => false])->get($url);
+
+        if ($response->successful()) {
+            return collect($response->json()['items'])->map(function ($item) {
+                return [
+                    'url' => 'https://www.youtube.com/watch?v=' . $item['id']['videoId'],
+                    'thumbnail' => $item['snippet']['thumbnails']['medium']['url'],
+                    'title' => $item['snippet']['title'],
+                ];
+            })->toArray();
         }
-        if ($marks->subject3_marks <= 40) {
-            $feedback['subject3'] = 'Need to improve in Subject 3';
-        }
-        if ($marks->subject4_marks <= 40) {
-            $feedback['subject4'] = 'Need to improve in Subject 4';
-        }
-        if ($marks->subject5_marks <= 40) {
-            $feedback['subject5'] = 'Need to improve in Subject 5';
-        }
-        return $feedback;
+
+        return [];
     }
 
 
 
-
-//     public function ShowMarks($registration_number)
-// {
-//     $registration_number = urldecode($registration_number);
-//     $student = Student::where('registration_number', $registration_number)->first();
-//     if (!$student) {
-//         return redirect()->back()->with('error', 'Student not found');
-//     }
-
-//     $marks = Marks::where('registration_number', $registration_number)->first();
-//     $grades = [];
-//     $feedback = [];
-
-//     if ($marks) {
-//         $grades = [
-//             'subject1_grade' => $this->determineGrade($marks->subject1_marks),
-//             'subject2_grade' => $this->determineGrade($marks->subject2_marks),
-//             'subject3_grade' => $this->determineGrade($marks->subject3_marks),
-//             'subject4_grade' => $this->determineGrade($marks->subject4_marks),
-//             'subject5_grade' => $this->determineGrade($marks->subject5_marks),
-//         ];
-
-//         $feedback = $this->generateFeedback($marks);
-//     }
-
-//     return view('student.student-marks', compact('student', 'marks', 'grades', 'feedback'));
-// }
-
-// private function determineGrade($marks)
-// {
-//     if ($marks < 50) {
-//         return 'F';
-//     } elseif ($marks <= 60) {
-//         return 'C';
-//     } elseif ($marks <= 70) {
-//         return 'B';
-//     } else {
-//         return 'A';
-//     }
-// }
-
-// private function generateFeedback($marks)
-// {
-//     $feedback = [];
-
-//     if ($marks->subject1_marks <= 40) {
-//         $feedback['subject1'] = 'You need to work hard in Subject 1.';
-//     }
-//     if ($marks->subject2_marks <= 40) {
-//         $feedback['subject2'] = 'You need to work hard in Subject 2.';
-//     }
-//     if ($marks->subject3_marks <= 40) {
-//         $feedback['subject3'] = 'You need to work hard in Subject 3.';
-//     }
-//     if ($marks->subject4_marks <= 40) {
-//         $feedback['subject4'] = 'You need to work hard in Subject 4.';
-//     }
-//     if ($marks->subject5_marks <= 40) {
-//         $feedback['subject5'] = 'You need to work hard in Subject 5.';
-//     }
-
-//     return $feedback;
-// }
-
-
-
-
 }
+
+
+
+    // public function ShowMarks($registration_number, YouTubeService $youTubeService)
+    // {
+    //     $registration_number = urldecode($registration_number);
+    //     $student = Student::where('registration_number', $registration_number)->first();
+    //     if (!$student) {
+    //         return redirect()->back()->with('error', 'Student not found');
+    //     }
+
+    //     $marks = Marks::where('registration_number', $registration_number)->first();
+    //     $grades = [];
+    //     $feedback = [];
+    //     $playlists = [];
+
+    //     if ($marks) {
+    //         $grades = [
+    //             'subject1_grade' => $this->determineGrade($marks->subject1_marks),
+    //             'subject2_grade' => $this->determineGrade($marks->subject2_marks),
+    //             'subject3_grade' => $this->determineGrade($marks->subject3_marks),
+    //             'subject4_grade' => $this->determineGrade($marks->subject4_marks),
+    //             'subject5_grade' => $this->determineGrade($marks->subject5_marks),
+    //         ];
+
+    //         $feedback = $this->generateFeedback($marks);
+
+    //     }
+    //     return view('student.student-marks', compact('student', 'marks', 'grades', 'feedback', 'playlists'));
+    // }
+
+
+    // private function determineGrade($marks)
+    // {
+    //     if ($marks < 50) {
+    //         return 'F';
+    //     } elseif ($marks <= 60) {
+    //         return 'C';
+    //     } elseif ($marks <= 70) {
+    //         return 'B';
+    //     } else {
+    //         return 'A';
+    //     }
+    // }
+
+    // private function generateFeedback($marks)
+    // {
+    //     $feedback = [];
+    //     if ($marks->subject1_marks <= 40) {
+    //         $feedback['subject1'] = 'Need to improve in Python';
+    //     }
+    //     if ($marks->subject2_marks <= 40) {
+    //         $feedback['subject2'] = 'Need to improve in Java';
+    //     }
+    //     if ($marks->subject3_marks <= 40) {
+    //         $feedback['subject3'] = 'Need to improve in PHP';
+    //     }
+    //     if ($marks->subject4_marks <= 40) {
+    //         $feedback['subject4'] = 'Need to improve in Javascript';
+    //     }
+    //     if ($marks->subject5_marks <= 40) {
+    //         $feedback['subject5'] = 'Need to improve in C++';
+    //     }
+    //     return $feedback;
+    // }
+
+
+
+
+    // public function ShowMarks($registration_number, YouTubeService $youTubeService)
+    // {
+    //     $registration_number = urldecode($registration_number);
+    //     $student = Student::where('registration_number', $registration_number)->first();
+    //     if (!$student) {
+    //         return redirect()->back()->with('error', 'Student not found');
+    //     }
+
+    //     $marks = Marks::where('registration_number', $registration_number)->first();
+    //     $grades = [];
+    //     $feedback = [];
+    //     $playlists = [];
+
+    //     if ($marks) {
+    //         $grades = [
+    //             'subject1_grade' => $this->determineGrade($marks->subject1_marks),
+    //             'subject2_grade' => $this->determineGrade($marks->subject2_marks),
+    //             'subject3_grade' => $this->determineGrade($marks->subject3_marks),
+    //             'subject4_grade' => $this->determineGrade($marks->subject4_marks),
+    //             'subject5_grade' => $this->determineGrade($marks->subject5_marks),
+    //         ];
+
+    //         $feedback = $this->generateFeedback($marks);
+    //     }
+    //     return view('student.student-marks', compact('student', 'marks', 'grades', 'feedback', 'playlists'));
+    // }
+
+
+
+
+    // private function determineGrade($marks)
+    // {
+    //     if ($marks < 50) {
+    //         return 'F';
+    //     } elseif ($marks <= 60) {
+    //         return 'C';
+    //     } elseif ($marks <= 70) {
+    //         return 'B';
+    //     } else {
+    //         return 'A';
+    //     }
+    // }
+
+
+    // private function generateFeedback($marks)
+    // {
+    //     $feedback = [];
+    //     $subjects = [
+    //         'subject1_marks' => 'Python',
+    //         'subject2_marks' => 'Java',
+    //         'subject3_marks' => 'PHP',
+    //         'subject4_marks' => 'Javascript',
+    //         'subject5_marks' => 'C++',
+    //     ];
+
+    //     foreach ($subjects as $key => $subject) {
+    //         if ($marks->$key <= 40) {
+    //             $feedback[$subject] = "\n\nYou've got low marks in $subject.\n Don't worry. Keep practicing, stay motivated, and use the following course materials to boost your skills!";
+    //         }
+    //     }
+
+    //     return $feedback;
+    // }
+
+
+
+
+
 
 
 
