@@ -38,7 +38,9 @@
                 <div class="home-section">
                     <div class="container">
 
-                        @if (session('success'))
+
+
+                         @if (session('success'))
                             <div class="alert alert-success" role="alert">
                                 <p>{{ session('success') }}</p>
                             </div>
@@ -54,7 +56,7 @@
                         @endif
 
 
-                        <div class="card my-5">
+                         <div class="card my-5">
                             <div class="card-header">
                                 <h4>Import Exam Marks Excel File</h4>
                             </div>
@@ -76,24 +78,37 @@
 
                         <table class="table my-5">
                             <thead>
-                              <tr>
-                                <th scope="col">Registratin Number</th>
-                                <th scope="col">Python</th>
-                                <th scope="col">Java</th>
-                                <th scope="col">PHP</th>
-                                <th scope="col">Javascript</th>
-                                <th scope="col">C++</th>
-                              </tr>
+                                <tr>
+                                    <th scope="col">Registratin Number</th>
+                                    <th scope="col">Python</th>
+                                    <th scope="col">Java</th>
+                                    <th scope="col">PHP</th>
+                                    <th scope="col">Javascript</th>
+                                    <th scope="col">C++</th>
+                                </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                              </tr>
+                                {{-- @foreach ($marks as $mark)
+                                    <tr>
+                                        <td>{{ $mark->registration_number }}</td>
+                                        <td>{{ $mark->subject1_marks }}</td>
+                                        <td>{{ $mark->subject2_marks }}</td>
+                                        <td>{{ $mark->subject3_marks }}</td>
+                                        <td>{{ $mark->subject4_marks }}</td>
+                                        <td>{{ $mark->subject5_marks }}</td>
+                                    </tr>
+                                @endforeach --}}
                             </tbody>
-                          </table>
+                        </table>
+
+
+
+
+
+
+
+
+
 
                     </div>
                 </div>

@@ -47,6 +47,8 @@ Route::get('lecturerProfile_update/{id}', [LecturerController::class, 'LecturerP
 Route::post('update-profile/{id}', [LecturerController::class, 'UpdateProfile'])->name('update-profile');
 Route::get('view_assigned_lectures/{id}', [LecturerController::class, 'ViewAssignedlectures'])->name('view_assigned_lectures');
 Route::get('dashboard_attendance/{id}', [LecturerController::class, 'attendanceTrends'])->name('dashboard_attendance');
+Route::get('video-call', [LecturerController::class, 'VideoCall'])->name('video-call');
+
 
 
 

@@ -107,6 +107,9 @@
     <a href="{{ route('dashboard_attendance', Auth::user()->lecturer->id) }}">
         <i class="fa fa-clone" aria-hidden="true"></i> chart
     </a>
+    <a href="{{ route('video-call', Auth::user()->lecturer->id) }}">
+        <i class="fa fa-clone" aria-hidden="true"></i> START A MEETING
+    </a>
 
     <!-- Add other sidebar links as needed -->
 </aside>

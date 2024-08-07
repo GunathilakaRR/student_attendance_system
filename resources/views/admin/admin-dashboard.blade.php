@@ -145,10 +145,6 @@
         </div>
     </div>
 
-
-
-
-
     {{-- 1st chart --}}
     <script>
         // Prepare data for the chart

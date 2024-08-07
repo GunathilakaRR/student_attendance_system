@@ -73,6 +73,14 @@ public function attendanceSummary($lectureId)
     ]);
 }
 
+
+// LecturerController.php
+public function videoCall()
+{
+    return view('lecturer.lecturerVideocall');
+}
+
+
 // public function attendanceSummary($lectureId)
 //     {
 //         $lecture = Lecture::find($lectureId);

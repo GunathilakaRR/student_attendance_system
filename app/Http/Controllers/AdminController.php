@@ -6,6 +6,7 @@ use App\Models\Student;
 use App\Models\Lecturer;
 use App\Models\Lecture;
 use App\Models\Schedule;
+use App\Models\Marks;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Notifications\LecturerAssignedNotification;
@@ -139,26 +140,34 @@ class AdminController extends Controller
     }
 
 
-    public function ImportMarks(Request $request){
+    public function ImportMarks(Request $request)
+{
 
-        //dd($request);
-
-        $request->validate([
-            'import_file' => 'required|file|mimes:xls,xlsx'
-        ]);
-
-        Excel::import(new MarkImport, $request->file('import_file'));
-        return redirect()->back()->with('success', 'File Uploaded Successfully.');
-    }
+    $request->validate([
+        'import_file' => 'required|file|mimes:xls,xlsx'
+    ]);
 
 
+    Excel::import(new MarkImport, $request->file('import_file'));
+
+    // Retrieve all marks from the database
+    // $marks = DB::table('marks')->get();
+
+    // Return the view with the retrieved marks
+     return view('admin.admin-addMarks')->with('success', 'File uploaded successfully');
+    // return view('admin.admin-addMarks', ['marks' => $marks])->with('success', 'File Uploaded Successfully.');
 }
 
 
 
 
-//     public function selectYear(){
 
-//     }
 
-// }
+
+
+
+
+
+}
+
+

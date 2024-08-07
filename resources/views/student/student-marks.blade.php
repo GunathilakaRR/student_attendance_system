@@ -99,7 +99,8 @@
                                                                     <a href="{{ $video['url'] }}" target="_blank" style="text-decoration: none;">
                                                                         <img src="{{ $video['thumbnail'] }}" class="card-img-top" alt="{{ $subject }} video">
                                                                         <div class="card-body">
-                                                                            <h5 style="font-size: 13px; " class="card-title">{{ $video['title'] }}</h5>
+                                                                            <h5 style="font-size: 13
+                                                                            px; " class="card-title">{{ $video['title'] }}</h5>
                                                                         </div>
                                                                     </a>
                                                                 </div>
