@@ -12,7 +12,7 @@
             <div class="mt-4">
                 <x-label for="role" value="Select Role:" />
                 <select id="role" name="role" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                    <option value="1">Admin</option>
+                    {{-- <option value="1">Admin</option> --}}
                     <option value="2">Lecturer</option>
                     <option value="0">Student</option>
                 </select>

@@ -73,54 +73,44 @@ class HomeController extends Controller
 
         }
         else{
+
             $user = Auth::user();
 
             if (!$user->student) {
                 return redirect()->back()->with('error', 'You are not registered as a student.');
             }
 
-            // Get all lectures along with their schedules for the logged-in student's lectures
+            // Get all lectures for the logged-in student's lectures
             $lectures = $user->student->lectures()->with('schedules')->get();
 
             foreach ($lectures as $lecture) {
-                foreach ($lecture->schedules as $schedule) {
-                    $schedule->formatted_start_time = Carbon::createFromFormat('H:i:s', $schedule->start_time)->format('g:i A');
-                    $schedule->formatted_end_time = Carbon::createFromFormat('H:i:s', $schedule->end_time)->format('g:i A');
-                }
 
-                // Get attendance data for the last 60 days
-                $startDate = Carbon::now()->subDays(60);
+
+                foreach ($lecture->schedules as $schedule) {
+                             $schedule->formatted_start_time = Carbon::createFromFormat('H:i:s', $schedule->start_time)->format('g:i A');
+                             $schedule->formatted_end_time = Carbon::createFromFormat('H:i:s', $schedule->end_time)->format('g:i A');
+                         }
+
+
+                // Total sessions for each lecture module
+                $totalSessions = 30; // Assuming each lecture module has 30 sessions
+
+                // Get the attendance count for the student for this lecture
                 $attendanceCount = $lecture->attendances()
-                    ->where('student_id', $user->student->id)
-                    ->where('created_at', '>=', $startDate)
+                    ->where('student_id', $user->student->id) // Filter by student ID
+                    ->where('lecture_id', $lecture->id) // Filter by the current lecture's ID
                     ->count();
 
                 // Store attendance data in the lecture object
                 $lecture->attendance_data = [
-                    'days_attended' => $attendanceCount,
-                    'days_missed' => 60 - $attendanceCount,
+                    'sessions_attended' => $attendanceCount,   // Number of sessions attended
+                    'sessions_missed' => $totalSessions - $attendanceCount, // Number of sessions missed
                 ];
             }
 
+            // Pass the lectures to the view
             return view('student.student-dashboard', compact('lectures'));
 
-
-
-            // $user = Auth::user();
-            // if (!$user->student) {
-            //     return redirect()->back()->with('error', 'You are not registered as a student.');
-            // }
-
-            // $lectures = $user->student->lectures()->with('schedules')->get();
-
-            // foreach ($lectures as $lecture) {
-            //     foreach ($lecture->schedules as $schedule) {
-            //         $schedule->formatted_start_time = Carbon::createFromFormat('H:i:s', $schedule->start_time)->format('g:i A');
-            //         $schedule->formatted_end_time = Carbon::createFromFormat('H:i:s', $schedule->end_time)->format('g:i A');
-            //     }
-            // }
-
-            // return view('student.student-dashboard', compact('lectures'));
 
         }
     }

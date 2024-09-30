@@ -101,12 +101,12 @@
     <a href="{{ route('lecturerProfile_update', Auth::user()->lecturer->id) }}">
         <i class="fa-solid fa-user" aria-hidden="true"></i> PROFILE
     </a>
-    <a href="{{ route('view_assigned_lectures', Auth::user()->lecturer->id) }}">
+    {{-- <a href="{{ route('view_assigned_lectures', Auth::user()->lecturer->id) }}">
         <i class="fa fa-clone" aria-hidden="true"></i> LECTURES
-    </a>
-    <a href="{{ route('dashboard_attendance', Auth::user()->lecturer->id) }}">
+    </a> --}}
+    {{-- <a href="{{ route('dashboard_attendance', Auth::user()->lecturer->id) }}">
         <i class="fa fa-clone" aria-hidden="true"></i> chart
-    </a>
+    </a> --}}
     <a href="{{ route('video-call', Auth::user()->lecturer->id) }}">
         <i class="fa fa-clone" aria-hidden="true"></i> START A MEETING
     </a>

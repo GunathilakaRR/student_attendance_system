@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 
 class LecturerController extends Controller
 {
@@ -26,14 +26,17 @@ class LecturerController extends Controller
     }
 
 
+
+
     public function otcGenerate(Request $request)
 {
+    // Validate that course_id is required and exists in the lectures table
     $request->validate([
         'course_id' => 'required|exists:lectures,id',
     ]);
 
     $lecture = Lecture::findOrFail($request->course_id);
-    $oneTimeCode = $lecture->code . Str::random(4);
+    $oneTimeCode = $lecture->code .'-'. Str::random(4);
     $expiration = now()->addSeconds(30);
 
     // Store the one-time code in cache with expiration
@@ -43,8 +46,11 @@ class LecturerController extends Controller
         'success' => 'One-time code generated successfully.',
         'one_time_code' => $oneTimeCode,
         'expiration' => $expiration->timestamp,
+        'selected_lecture' => $request->course_id,
     ]);
 }
+
+
 
 
 public function attendanceSummary($lectureId)
@@ -157,6 +163,7 @@ public function videoCall()
     }
 
 
+
     public function attendanceTrends($id)
     {
         $lectures = DB::table('lectures')
@@ -185,24 +192,59 @@ public function videoCall()
 
 
     public function downloadSummary($lectureId)
-    {
-        $lecture = Lecture::findOrFail($lectureId);
-        $attendances = $lecture->attendances;
+{
+    // Load the lecture with the attendances for today only
+    $today = Carbon::today(); // Get today's date
+    $lecture = Lecture::with(['attendances' => function ($query) use ($today) {
+        $query->whereDate('created_at', $today); // Filter attendances for the current day
+    }, 'attendances.student'])->findOrFail($lectureId);
 
-        $content = "Attendance Summary for " . $lecture->title . "\n\n";
-        $content .= "Student Registration Number\tDate and Time\n";
-
-        foreach ($attendances as $attendance) {
-            $content .= $attendance->student->registration_number . "\t" . $attendance->created_at . "\n";
-        }
-
-        $fileName = 'attendance-summary-' . $lecture->id . '.txt';
-
-        return Response::make($content, 200, [
-            'Content-Type' => 'text/plain',
-            'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
-        ]);
+    // Check if there are any attendances for today
+    if ($lecture->attendances->isEmpty()) {
+        return back()->with('error', 'No attendance records found for today.');
     }
+
+    // Create the content for the summary file
+    $content = "Attendance Summary for " . $lecture->title . " (Date: " . $today->toDateString() . ")\n\n";
+    $content .= "Student Registration Number\tDate and Time\n";
+
+    foreach ($lecture->attendances as $attendance) {
+        if ($attendance->student) {
+            $content .= $attendance->student->registration_number . "\t" . $attendance->created_at->format('Y-m-d H:i:s') . "\n";
+        }
+    }
+
+    $fileName = 'attendance-summary-' . $lecture->id . '-'. $today->format('Y-m-d') .'.txt';
+
+    // Return the response for download
+    return Response::make($content, 200, [
+        'Content-Type' => 'text/plain',
+        'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
+    ]);
+}
+
+
+    // public function downloadSummary($lectureId)
+    // {
+
+
+    //     $lecture = Lecture::findOrFail($lectureId);
+    //     $attendances = $lecture->attendances;
+
+    //     $content = "Attendance Summary for " . $lecture->title . "\n\n";
+    //     $content .= "Student Registration Number\tDate and Time\n";
+
+    //     foreach ($attendances as $attendance) {
+    //         $content .= $attendance->student->registration_number . "\t" . $attendance->created_at . "\n";
+    //     }
+
+    //     $fileName = 'attendance-summary-' . $lecture->id . '.txt';
+
+    //     return Response::make($content, 200, [
+    //         'Content-Type' => 'text/plain',
+    //         'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
+    //     ]);
+    // }
 
 
 

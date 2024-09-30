@@ -76,7 +76,7 @@
 <aside>
     {{-- <p>lecturer </p> --}}
     <div style="text-align: center;">
-        <h2>{{ Auth::user()->admin->name1 }}</h2>
+        <h2 style="text-transform: uppercase">{{ Auth::user()->admin->name1 }}</h2>
 
     </div>
 

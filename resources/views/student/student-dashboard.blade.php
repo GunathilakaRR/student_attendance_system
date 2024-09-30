@@ -49,9 +49,9 @@
 
             <div style="padding: 0 40px 0 40px;">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="mt-5">
-                            <h2>Time Table</h2>
+                            <h2 style="font-size: 30px;">Time Table</h2>
                             <table class="table table-bordered"
                                 style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); width: 100%;">
                                 <thead>
@@ -89,11 +89,15 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <h2 class="mt-5">Attendance Report</h2>
+
+
+
+
+                    <div class="col-md-8">
+                        <h2 style="font-size: 30px;" class="mt-5">Attendance Report</h2>
                         <div class="row">
                             @forelse ($lectures as $lecture)
-                                <div class="attendance-chart-container-outer col-md-6 mt-3"
+                                <div class="attendance-chart-container-outer col-12 col-sm-6 col-md-4 col-lg-4 mt-3"
                                     style="box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
                                     <div class="attendance-chart-container mb-4" style="padding: 10px;">
                                         <h3>{{ $lecture->title }}</h3>
@@ -104,10 +108,11 @@
                                             document.addEventListener('DOMContentLoaded', function() {
                                                 const ctx = document.getElementById('attendanceChart{{ $lecture->id }}').getContext('2d');
                                                 const chartData = {
-                                                    labels: ['Days Attended', 'Days Missed'],
+                                                    labels: ['Sessions Attended', 'Sessions Missed'],
                                                     datasets: [{
-                                                        data: [{{ $lecture->attendance_data['days_attended'] }},
-                                                            {{ $lecture->attendance_data['days_missed'] }}
+                                                        data: [
+                                                            {{ $lecture->attendance_data['sessions_attended'] }},
+                                                            {{ $lecture->attendance_data['sessions_missed'] }}
                                                         ],
                                                         backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)'],
                                                     }]
@@ -124,7 +129,7 @@
                                                             },
                                                             title: {
                                                                 display: true,
-                                                                text: 'Attendance Report for Last 60 Days'
+                                                                text: 'Attendance Report for {{ $lecture->title }}'
                                                             }
                                                         },
                                                         animation: {
@@ -140,7 +145,6 @@
                             @empty
                                 <p>No registered lectures.</p>
                             @endforelse
-
                         </div>
                     </div>
                 </div>
