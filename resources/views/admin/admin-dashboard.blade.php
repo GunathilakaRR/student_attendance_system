@@ -39,6 +39,13 @@
         @include('admin.admin-sidebar')
 
         <div class="home-section">
+
+
+
+
+
+
+
             <div class="container-fluid mt-4">
                 <div class="row">
                     <div class="col-xl-3 col-md-6 mb-4">
@@ -136,14 +143,23 @@
                             <p>Lecturers: {{ $lecturerCount }}</p>
                         </div>
                     </div>
-
                 </div>
-
-
-
             </div>
+
+
+
+            <h2>Attendance Trends Over Time</h2>
+    <div style="width: 100%; max-width: 600px; margin: auto;">
+        <canvas id="attendanceTrendsChart"></canvas>
+    </div>
+
+
+
         </div>
     </div>
+
+
+
 
     {{-- 1st chart --}}
     <script>
@@ -214,6 +230,8 @@
             }
         });
     </script>
+
+
 
 
 </x-app-layout>

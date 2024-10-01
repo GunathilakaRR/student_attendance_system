@@ -107,9 +107,9 @@ body {
         <a href="{{ url('students/' . urlencode(Auth::user()->student->registration_number) . '/marks') }}">
             <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> MARKS
         </a>
-        <a href="{{ route('student-cvbuilder') }}">
+        {{-- <a href="{{ route('student-cvbuilder') }}">
             <i class="fa fa-clone" aria-hidden="true"></i> CV BUILDER
-        </a>
+        </a> --}}
         <a href="{{ route('studentProfile_update', Auth::user()->student->id) }}">
             <i class="fa-solid fa-user" aria-hidden="true"></i> PROFILE
         </a>

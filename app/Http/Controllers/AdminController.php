@@ -12,6 +12,8 @@ use Carbon\Carbon;
 use App\Notifications\LecturerAssignedNotification;
 use App\Imports\MarkImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
+
 
 class AdminController extends Controller
 {
@@ -21,8 +23,6 @@ class AdminController extends Controller
 
         // Pass $students to your view
         return view('admin.view-students', ['students' => $students]);
-
-
     }
 
 
@@ -36,7 +36,25 @@ class AdminController extends Controller
 
         $students = Student::find($id);
 
-        return view('admin.admin-viewStudent', compact('students'));
+        $attendanceRecords = DB::table('attendances')
+        ->join('lectures', 'attendances.lecture_id', '=', 'lectures.id')
+        ->select('lectures.title as lecture_name', 'attendances.created_at as date')
+        ->where('attendances.student_id', $id)
+        ->orderBy('attendances.created_at')
+        ->get();
+
+        // Prepare data for pie chart
+    $attendanceCounts = [];
+    foreach ($attendanceRecords as $record) {
+        $attendanceCounts[$record->lecture_name]['attended'] = ($attendanceCounts[$record->lecture_name]['attended'] ?? 0) + 1;
+    }
+
+    // Assuming you have a total of 30 sessions for each lecture
+    foreach ($attendanceCounts as $lecture => $counts) {
+        $attendanceCounts[$lecture]['missed'] = 30 - ($counts['attended'] ?? 0); // Assuming 30 sessions
+    }
+
+        return view('admin.admin-viewStudent', compact('students', 'attendanceCounts'));
     }
 
     public function adminViewLecturer($id){

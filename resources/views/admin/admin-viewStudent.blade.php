@@ -109,12 +109,14 @@
                             <div class="col-md-5 border-right">
                                 <div class="p-3 py-5">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h4 style="text-transform: capitalize;" class="text-right">{{ $students->name1 }}'s Profile</h4>
+                                        <h4 style="text-transform: capitalize;" class="text-right">
+                                            {{ $students->name1 }}'s Profile</h4>
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-md-6"><label class="labels">First Name</label><input
                                                 type="text" class="form-control" placeholder="first name"
-                                                value="{{ $students->name1 }}" style="text-transform: capitalize;"></div>
+                                                value="{{ $students->name1 }}" style="text-transform: capitalize;">
+                                        </div>
                                         <div class="col-md-6"><label class="labels">Last Name</label><input
                                                 type="text" class="form-control" value="{{ $students->name2 }}"
                                                 placeholder="last name" style="text-transform: capitalize;"></div>
@@ -122,7 +124,8 @@
                                     <div class="row mt-2">
                                         <div class="col-md-6"><label class="labels">Registration No.</label><input
                                                 type="text" class="form-control" placeholder="registration number"
-                                                value="{{ $students->registration_number }}" style="text-transform: uppercase;"></div>
+                                                value="{{ $students->registration_number }}"
+                                                style="text-transform: uppercase;"></div>
                                         <div class="col-md-6"><label class="labels">Email</label><input type="email"
                                                 class="form-control" value="{{ $students->email }}" placeholder="email">
                                         </div>
@@ -164,6 +167,7 @@
                                             type="button">Save Profile</button></div> --}}
                                 </div>
                             </div>
+
                             {{-- <div class="col-md-4">
                                 <div class="p-3 py-5">
                                     <div class="d-flex justify-content-between align-items-center experience">
@@ -179,33 +183,72 @@
                                 </div>
                             </div> --}}
                         </div>
+
+                        <div class="row">
+                            <h4 class="mt-5" style="margin-left: 70px;">Attendance Summary</h4>
+                        </div>
+                        <div class="row mt-3">
+                            @foreach ($attendanceCounts as $lecture => $counts)
+                                <div class="col-md-3 mb-4"> <!-- Adjusted column class for four charts per row -->
+
+                                    <h5 class="text-center" style="text-transform: uppercase;">{{ $lecture }}</h5>
+                                    <div style="position: relative; height: 150px; width: 150px; margin: auto;">
+                                        <canvas id="attendanceChart{{ str_replace(' ', '_', $lecture) }}"></canvas>
+                                    </div>
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const ctx = document.getElementById('attendanceChart{{ str_replace(' ', '_', $lecture) }}').getContext(
+                                                '2d');
+                                            const attendanceData = {
+                                                labels: ['Sessions Attended', 'Sessions Missed'],
+                                                datasets: [{
+                                                    data: [
+                                                        {{ $counts['attended'] }},
+                                                        {{ $counts['missed'] }}
+                                                    ],
+                                                    backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)'],
+                                                }]
+                                            };
+                                            new Chart(ctx, {
+                                                type: 'pie',
+                                                data: attendanceData,
+                                                options: {
+                                                    responsive: true,
+                                                    plugins: {
+                                                        legend: {
+                                                            position: 'top',
+                                                        },
+                                                        title: {
+                                                            display: true,
+                                                            text: 'Attendance Summary for {{ $lecture }}'
+                                                        }
+                                                    },
+                                                }
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                            @endforeach
+                        </div>
+
+
+
+
+
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>
         </div>
 
-
-
-
-
-
-
-
-
-
-
         </div>
-
-
     </body>
 
     </html>
-
-
-
 </x-app-layout>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

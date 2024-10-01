@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public function dashboard(){
+
+
+
+
         $role = Auth::user()->role;
 
         if (auth()->user()->role == '1') {
@@ -50,6 +54,9 @@ class HomeController extends Controller
             foreach ($attendanceData as $data) {
                 $attendanceCounts[$data->lecture_name] = $data->attendance_count;
             }
+
+
+
 
             return view('admin.admin-dashboard', compact('studentCount', 'lecturerCount', 'averageMarks', 'attendanceCounts'));
 
