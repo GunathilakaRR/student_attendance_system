@@ -73,6 +73,8 @@ class AdminController extends Controller
         return view('admin.admin-viewLectures', compact('lectures'));
     }
 
+
+
     public function addNewLecture(){
         return view('admin.admin-addNewLecture');
     }
@@ -138,7 +140,8 @@ class AdminController extends Controller
 
     public function ViewLectureInfo($code){
 
-        $lecture = Lecture::where('code', $code)->with('lecturers')->firstOrFail();
+        $lecture = Lecture::where('code', $code)->with(['lecturers', 'schedules'])->firstOrFail();
+        //dd($lecture);
         return view('admin.admin-viewLectureInfo', compact('lecture'));
     }
 
@@ -154,7 +157,8 @@ class AdminController extends Controller
 
 
     public function AddMarks(){
-        return view('admin.admin-addMarks');
+        $marks = Marks::all();
+        return view('admin.admin-addMarks', compact('marks'));
     }
 
 

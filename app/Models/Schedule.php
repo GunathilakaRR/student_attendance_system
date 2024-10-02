@@ -13,6 +13,6 @@ class Schedule extends Model
 
     public function lecture()
     {
-        return $this->belongsTo(Lecture::class);
+        return $this->belongsTo(Lecture::class, 'lecture_id');
     }
 }

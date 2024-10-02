@@ -88,16 +88,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($marks as $mark)
+                                @foreach ($marks as $mark)
                                     <tr>
-                                        <td>{{ $mark->registration_number }}</td>
+                                        <td style="text-transform: uppercase">{{ $mark->registration_number }}</td>
                                         <td>{{ $mark->subject1_marks }}</td>
                                         <td>{{ $mark->subject2_marks }}</td>
                                         <td>{{ $mark->subject3_marks }}</td>
                                         <td>{{ $mark->subject4_marks }}</td>
                                         <td>{{ $mark->subject5_marks }}</td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
 

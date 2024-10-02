@@ -148,13 +148,6 @@
 
 
 
-            <h2>Attendance Trends Over Time</h2>
-    <div style="width: 100%; max-width: 600px; margin: auto;">
-        <canvas id="attendanceTrendsChart"></canvas>
-    </div>
-
-
-
         </div>
     </div>
 
