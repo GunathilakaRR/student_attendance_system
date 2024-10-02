@@ -124,32 +124,135 @@
 
 
                 <div class="row">
-                    <div class="col-md-6 card1 border-left-warning shadow  py-5 mr-5" >
+                    <div class="col-md-5 card1 border-left-warning shadow  py-5 mr-5">
                         <!-- Canvas element for the bar chart -->
-                        <h3 >Exam Performance</h3>
-                        <canvas  id="averageMarksChart"></canvas>
+                        <h3>Exam Performance</h3>
+                        <canvas id="averageMarksChart"></canvas>
                         <!-- Your existing dashboard content -->
                         <div>
                             <p style="font-size: 20px;">No. of Students: {{ $studentCount }}</p>
                         </div>
                     </div>
 
-                    <div class="col-md-5 card1 border-left-warning shadow  py-5 ">
+
+                    <div class="col-md-6 card1 border-left-warning shadow  py-5 ">
+                        <h2 class="text-center mb-4">Attendance Trends Over Last 30 Days</h2>
+                        <div style="position: relative; height: 300px; width: 100%; max-width: 800px; margin: auto;">
+                            <canvas id="combinedAttendanceTrendsChart"></canvas>
+                        </div>
                         <!-- Canvas element for the bar chart -->
-                        <h3 >Attendance Performance</h3>
+                        {{-- <h3 >Attendance Performance</h3>
                         <canvas class="mt-5" id="attendanceBarChart"></canvas>
                         <div>
                             <p>Students: {{ $studentCount }}</p>
                             <p>Lecturers: {{ $lecturerCount }}</p>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
 
-
-
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+    <!-- Script to Render the Combined Chart -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('combinedAttendanceTrendsChart').getContext('2d');
+
+            // Prepare attendance data for each lecture
+            const lectureTitles = {!! json_encode(array_keys($attendanceTrends)) !!}; // Lecture titles
+            const dates = {!! json_encode($last30Days) !!}; // Dates for the last 30 days
+            const attendanceDataSets = []; // To store datasets for each lecture
+
+            const colors = [
+                'rgba(75, 192, 192, 1)', // Color 1
+                'rgba(255, 99, 132, 1)', // Color 2
+                'rgba(255, 206, 86, 1)', // Color 3
+                'rgba(54, 162, 235, 1)', // Color 4
+                'rgba(153, 102, 255, 1)', // Color 5
+                'rgba(255, 159, 64, 1)' // Color 6
+            ];
+
+            // Create a dataset for each lecture with different colors
+            lectureTitles.forEach((lecture, index) => {
+                attendanceDataSets.push({
+                    label: lecture,
+                    data: {!! json_encode($attendanceTrends) !!}[lecture], // Attendance counts for this lecture
+                    borderColor: colors[index % colors.length], // Use colors cyclically
+                    backgroundColor: colors[index % colors.length],
+                    fill: false, // Do not fill the area under the line
+                    tension: 0.1 // Smoothness of the line
+                });
+            });
+
+            // Create the combined line chart
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates, // X-axis labels (dates)
+                    datasets: attendanceDataSets // All lecture datasets
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Attendance Trends for All Lectures Over the Last 30 Days'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true, // Start y-axis at 0
+                            min: 0, // Minimum value of 0 on the y-axis
+                            max: 10, // Default maximum value of 10
+                            ticks: {
+                                stepSize: 2, // Increment by 2
+                                callback: function(value) {
+                                    // Show only whole numbers on the y-axis
+                                    if (Number.isInteger(value)) {
+                                        return value;
+                                    }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Number of Students'
+                            },
+                            // Dynamically adjust the maximum value based on the data
+                            suggestedMax: function(context) {
+                                // Calculate the highest number of students in the dataset and adjust the max value
+                                const maxData = context.chart.data.datasets.reduce((max, dataset) => {
+                                    return Math.max(max, Math.max(...dataset.data));
+                                }, 0);
+                                return maxData > 10 ? maxData + 2 :
+                                10; // Increase max by 2 if data exceeds 10
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Days (Last 30 Days)'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
 
 
 
@@ -193,36 +296,7 @@
 
 
     {{-- 2nd chart --}}
-    <script>
-        // Prepare data for the bar chart
-        const attendanceCounts = @json($attendanceCounts);
-        const lectureLabels = Object.keys(attendanceCounts);
-        const lectureData = Object.values(attendanceCounts);
 
-        // Create the bar chart
-        const ctxBar = document.getElementById('attendanceBarChart').getContext('2d');
-        const attendanceBarChart = new Chart(ctxBar, {
-            type: 'bar',
-            data: {
-                labels: lectureLabels,
-                datasets: [{
-                    label: 'Number of Students Attending',
-                    data: lectureData,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        precision: 0
-                    }
-                }
-            }
-        });
-    </script>
 
 
 

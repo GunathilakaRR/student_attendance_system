@@ -42,23 +42,44 @@ class HomeController extends Controller
             // Convert the result to an array for easy manipulation in the view
             $averageMarks = (array) $averageMarks;
 
-            // Fetch attendance data along with lecture names
-            $attendanceData = DB::table('attendances')
-                ->join('lectures', 'attendances.lecture_id', '=', 'lectures.id')
-                ->select('lectures.title as lecture_name', DB::raw('COUNT(attendances.student_id) as attendance_count'))
-                ->groupBy('lectures.title')
-                ->get();
+            // Get the dates for the last 30 days
+    $last30Days = collect();
+    for ($i = 0; $i < 30; $i++) {
+        $last30Days->push(now()->subDays($i)->format('Y-m-d'));
+    }
+    $last30Days = $last30Days->reverse()->values(); // Reverse to have oldest dates first
 
-            // Prepare attendance data for the view
-            $attendanceCounts = [];
-            foreach ($attendanceData as $data) {
-                $attendanceCounts[$data->lecture_name] = $data->attendance_count;
-            }
+    // Prepare attendance trends data for each lecture over the last 30 days
+    $lectures = Lecture::all(); // Fetch all lectures
+    $attendanceTrends = [];
 
+    foreach ($lectures as $lecture) {
+        $lectureTitle = $lecture->title;
 
+        // Get attendance records for the last 30 days, grouped by date
+        $attendanceRecords = DB::table('attendances')
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
+            ->where('lecture_id', $lecture->id)
+            ->where('created_at', '>=', now()->subDays(30))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
 
+        // Initialize the attendance count for each date as 0
+        $countsByDate = $last30Days->mapWithKeys(function ($date) {
+            return [$date => 0];
+        });
 
-            return view('admin.admin-dashboard', compact('studentCount', 'lecturerCount', 'averageMarks', 'attendanceCounts'));
+        // Fill in the attendance counts from the records
+        foreach ($attendanceRecords as $record) {
+            $countsByDate[$record->date] = $record->count;
+        }
+
+        // Store the trend data for each lecture
+        $attendanceTrends[$lectureTitle] = $countsByDate->values()->all(); // Convert counts to a simple array
+    }
+
+            return view('admin.admin-dashboard', compact('studentCount', 'lecturerCount', 'averageMarks',  'attendanceTrends', 'last30Days'));
 
 
         }elseif($role == '2'){
