@@ -61,7 +61,7 @@
                                 <h4>Import Exam Marks Excel File</h4>
                             </div>
                             <div class="card-body ">
-                                <form action="{{ route('add-marks') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('import-marks') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
 
                                     <div class="input-group">

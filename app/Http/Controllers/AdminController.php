@@ -158,26 +158,38 @@ class AdminController extends Controller
 
     public function AddMarks(){
         $marks = Marks::all();
+
+        if ($marks->isEmpty()) {
+            dd('No marks found');
+        }
+
         return view('admin.admin-addMarks', compact('marks'));
     }
 
 
-    public function ImportMarks(Request $request)
-{
+
+
+    public function ImportMarks(Request $request){
 
     $request->validate([
         'import_file' => 'required|file|mimes:xls,xlsx'
     ]);
 
-
     Excel::import(new MarkImport, $request->file('import_file'));
 
-    // Retrieve all marks from the database
-    // $marks = DB::table('marks')->get();
+    $marks = Marks::all();
 
-    // Return the view with the retrieved marks
-     return view('admin.admin-addMarks')->with('success', 'File uploaded successfully');
-    // return view('admin.admin-addMarks', ['marks' => $marks])->with('success', 'File Uploaded Successfully.');
+    // Flash the success message to the session
+    session()->flash('success', 'File uploaded successfully');
+
+    // Return the view with the marks and success message
+    return view('admin.admin-addMarks', compact('marks'));
+
+    // if ($marks->isEmpty()) {
+    //     dd('No marks found after import');
+    // }
+
+    //  return view('admin.admin-addMarks', compact('marks'))->with('success', 'File uploaded successfully');
 }
 
 

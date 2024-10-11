@@ -65,5 +65,5 @@ Route::post('assign-lecturer', [AdminController::class, 'AssignLecturer'])->name
 Route::get('view-lecture-info-/{code}', [AdminController::class, 'ViewLectureInfo'])->name('view-lecture-info-');
 Route::get('delete-lecture/{id}', [AdminController::class, 'DeleteLecture'])->name('delete-lecture');
 Route::get('add-marks', [AdminController::class, 'AddMarks'])->name('add-marks');
-Route::post('add-marks', [AdminController::class, 'ImportMarks'])->name('add-marks');
+Route::post('import-marks', [AdminController::class, 'ImportMarks'])->name('import-marks');
 
