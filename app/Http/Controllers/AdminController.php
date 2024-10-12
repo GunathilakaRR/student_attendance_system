@@ -160,8 +160,8 @@ class AdminController extends Controller
 
 
     public function AddMarks(){
-        // $marks = Marks::all();
-        $marks = Marks::paginate(5);;
+         $marks = Marks::all();
+        // $marks = Marks::paginate(5);
 
         if ($marks->isEmpty()) {
             dd('No marks found');

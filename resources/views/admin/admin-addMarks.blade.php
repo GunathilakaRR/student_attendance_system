@@ -31,15 +31,7 @@
                     padding: 20px;
                 }
 
-                .page-item.active .page-link {
-                    background-color: red !important;
-                    border-color: red !important;
-                    color: white !important;
-                }
-
-                .page-link {
-                    color: black !important;
-                }
+                
             </style>
 
             <div class="container1">
@@ -112,9 +104,9 @@
                         </table>
 
 
-                        <div class="d-flex justify-content-center">
+                        {{-- <div class="d-flex justify-content-center">
                             {{ $marks->links() }}
-                        </div>
+                        </div> --}}
 
 
 
