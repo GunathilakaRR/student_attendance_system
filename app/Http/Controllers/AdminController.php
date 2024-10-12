@@ -19,18 +19,20 @@ class AdminController extends Controller
 {
 
     public function viewStudents(){
-        $students = Student::all();
+        // $students = Student::all();
 
-        // Pass $students to your view
+        $students = Student::paginate(5);
         return view('admin.view-students', ['students' => $students]);
     }
 
 
     public function viewlecturers(){
-        $lecturers = Lecturer::all();
+        // $lecturers = Lecturer::all();
 
+        $lecturers = Lecturer::paginate(5);
         return view('admin.view-lecturers', ['lecturers' => $lecturers]);
     }
+
 
     public function adminViewStudent($id){
 
@@ -57,6 +59,7 @@ class AdminController extends Controller
         return view('admin.admin-viewStudent', compact('students', 'attendanceCounts'));
     }
 
+
     public function adminViewLecturer($id){
 
         $lecturers = Lecturer::find($id);
@@ -67,9 +70,9 @@ class AdminController extends Controller
     }
 
     public function viewLectures(){
-        // $lectures = Lecture::all();
-        // return view('admin.admin-viewLectures',  ['lectures' => $lectures]);
-        $lectures = Lecture::with('lecturers')->get();
+
+        // $lectures = Lecture::with('lecturers')->get();
+        $lectures = Lecture::with('lecturers')->paginate(5);
         return view('admin.admin-viewLectures', compact('lectures'));
     }
 
@@ -157,7 +160,8 @@ class AdminController extends Controller
 
 
     public function AddMarks(){
-        $marks = Marks::all();
+        // $marks = Marks::all();
+        $marks = Marks::paginate(5);;
 
         if ($marks->isEmpty()) {
             dd('No marks found');

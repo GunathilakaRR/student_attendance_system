@@ -33,47 +33,14 @@
 
                 aside {}
 
-
-
-                .form-control:focus {
-                    box-shadow: none;
-                    border-color: #BA68C8
+                .page-item.active .page-link {
+                    background-color: red !important;
+                    border-color: red !important;
+                    color: white !important;
                 }
 
-                .profile-button {
-                    background: rgb(99, 39, 120);
-                    box-shadow: none;
-                    border: none
-                }
-
-                .profile-button:hover {
-                    background: #682773
-                }
-
-                .profile-button:focus {
-                    background: #682773;
-                    box-shadow: none
-                }
-
-                .profile-button:active {
-                    background: #682773;
-                    box-shadow: none
-                }
-
-                .back:hover {
-                    color: #682773;
-                    cursor: pointer
-                }
-
-                .labels {
-                    font-size: 11px
-                }
-
-                .add-experience:hover {
-                    background: #BA68C8;
-                    color: #fff;
-                    cursor: pointer;
-                    border: solid 1px #BA68C8
+                .page-link {
+                    color: black !important;
                 }
             </style>
 
@@ -83,50 +50,64 @@
                 <div class="home-section">
 
                     <a href="{{ route('add-newLecture') }}">
-                        <button class="btn mb-5" style="background-color: #e84424; color: #ffff">Add New Lecture</button>
+                        <button class="btn mb-5" style="background-color: #e84424; color: #ffff">Add New
+                            Lecture</button>
                     </a>
 
 
 
                     @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Course Code</th>
-                                <th scope="col">Course Name</th>
-                                <th scope="col">Lecturer</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
 
-                            @foreach ($lectures as $lecture)
+                    <div class="container">
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <td style="text-transform: uppercase">{{ $lecture->code }}</td>
-                                    <td style="text-transform: uppercase">{{ $lecture->title }}</td>
-                                    <td>
-                                        @if($lecture->lecturers->isEmpty())
-                                            <em>No lecturers assigned</em>
-                                        @else
-                                            @foreach($lecture->lecturers as $lecturer)
-                                                <span style="text-transform: capitalize">{{ $lecturer->name1 }} {{ " " }} {{ $lecturer->name2 }}</span><br>
-                                            @endforeach
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{ url('assign-lecturer/'. $lecture->id) }}"><i class="fas fa-edit btn btn-primary" title="Assign a Lecturer"></i></a>
-                                     <a href="{{ route('delete-lecture', $lecture->id) }}"><i class="fas fa-trash-alt btn btn-danger" title="Delete"></i></a>
-                                        <a href="{{ route('view-lecture-info-' , $lecture->code) }}"><i class="fas fa-eye btn btn-success" title="View More"></i></a>
-                                    </td>
+                                    <th scope="col">Course Code</th>
+                                    <th scope="col">Course Name</th>
+                                    <th scope="col">Lecturer</th>
+                                    <th scope="col">Actions</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+
+                                @foreach ($lectures as $lecture)
+                                    <tr>
+                                        <td style="text-transform: uppercase">{{ $lecture->code }}</td>
+                                        <td style="text-transform: uppercase">{{ $lecture->title }}</td>
+                                        <td>
+                                            @if ($lecture->lecturers->isEmpty())
+                                                <em>No lecturers assigned</em>
+                                            @else
+                                                @foreach ($lecture->lecturers as $lecturer)
+                                                    <span style="text-transform: capitalize">{{ $lecturer->name1 }}
+                                                        {{ ' ' }} {{ $lecturer->name2 }}</span><br>
+                                                @endforeach
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{ url('assign-lecturer/' . $lecture->id) }}"><i
+                                                    class="fas fa-edit btn btn-primary"
+                                                    title="Assign a Lecturer"></i></a>
+                                            <a href="{{ route('delete-lecture', $lecture->id) }}"><i
+                                                    class="fas fa-trash-alt btn btn-danger" title="Delete"></i></a>
+                                            <a href="{{ route('view-lecture-info-', $lecture->code) }}"><i
+                                                    class="fas fa-eye btn btn-success" title="View More"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <div class="d-flex justify-content-center">
+                            {{ $lectures->links() }}
+                        </div>
+                    </div>
+
 
 
                 </div>
@@ -135,5 +116,5 @@
         </div>
     </body>
 
-</html>
+    </html>
 </x-app-layout>

@@ -30,6 +30,16 @@
                     flex: 1;
                     padding: 20px;
                 }
+
+                .page-item.active .page-link {
+                    background-color: red !important;
+                    border-color: red !important;
+                    color: white !important;
+                }
+
+                .page-link {
+                    color: black !important;
+                }
             </style>
 
             <div class="container1">
@@ -40,7 +50,7 @@
 
 
 
-                         @if (session('success'))
+                        @if (session('success'))
                             <div class="alert alert-success" role="alert">
                                 <p>{{ session('success') }}</p>
                             </div>
@@ -56,7 +66,7 @@
                         @endif
 
 
-                         <div class="card my-5">
+                        <div class="card my-5">
                             <div class="card-header">
                                 <h4>Import Exam Marks Excel File</h4>
                             </div>
@@ -102,6 +112,9 @@
                         </table>
 
 
+                        <div class="d-flex justify-content-center">
+                            {{ $marks->links() }}
+                        </div>
 
 
 
