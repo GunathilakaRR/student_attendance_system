@@ -47,8 +47,70 @@
 
 
             <div class="container-fluid mt-4">
-                <div class="row">
-                    <div class="col-xl-3 col-md-6 mb-4">
+
+                <div class="row mb-5">
+                    <!-- No. of Students Card -->
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                            No. Of Students</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $studentCount }}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa-solid fa-children fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- No. of Lecturers Card -->
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                            No. Of Lecturers</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $lecturerCount }}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa-solid fa-user-tie fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Today's Time and Day Card -->
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                            Today's Date & Time</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <span id="currentDateTime"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa-solid fa-clock fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                {{-- <div class="row mb-5">
+                    <div class="col-xl-5 col-md-6 mb-4">
                         <div class="card border-left-primary shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
@@ -66,7 +128,7 @@
                     </div>
 
                     <!-- Earnings (Annual) Card Example -->
-                    <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="col-xl-5 col-md-6 mb-4">
                         <div class="card border-left-success shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
@@ -83,42 +145,9 @@
                         </div>
                     </div>
 
-                    <!-- Tasks Card Example -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-info shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                            Departments</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">4</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fa-solid fa-building fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Pending Requests Card Example -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-warning shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold  text-uppercase mb-1">
-                                            Pending Requests</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                </div> --}}
 
 
 
@@ -299,6 +328,18 @@
 
 
 
+    {{-- script to display time date date --}}
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', hour: '2-digit', minute: '2-digit', hour12: true };
+            const formattedTime = now.toLocaleTimeString('en-US', options);
+            document.getElementById('currentDateTime').innerText = formattedTime;
+        }
+
+        updateTime(); // Initial call
+        setInterval(updateTime, 60000); // Update every minute
+    </script>
 
 
 </x-app-layout>
