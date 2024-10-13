@@ -109,45 +109,7 @@
 
 
 
-                {{-- <div class="row mb-5">
-                    <div class="col-xl-5 col-md-6 mb-4">
-                        <div class="card border-left-primary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                            No. Of Students</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $studentCount }}</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fa-solid fa-children fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Earnings (Annual) Card Example -->
-                    <div class="col-xl-5 col-md-6 mb-4">
-                        <div class="card border-left-success shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold  text-uppercase mb-1">
-                                            No. Of Lecturers</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $lecturerCount }}</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fa-solid fa-user-tie fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div> --}}
 
 
 
@@ -169,13 +131,7 @@
                         <div style="position: relative; height: 300px; width: 100%; max-width: 800px; margin: auto;">
                             <canvas id="combinedAttendanceTrendsChart"></canvas>
                         </div>
-                        <!-- Canvas element for the bar chart -->
-                        {{-- <h3 >Attendance Performance</h3>
-                        <canvas class="mt-5" id="attendanceBarChart"></canvas>
-                        <div>
-                            <p>Students: {{ $studentCount }}</p>
-                            <p>Lecturers: {{ $lecturerCount }}</p>
-                        </div> --}}
+                        
                     </div>
                 </div>
             </div>
